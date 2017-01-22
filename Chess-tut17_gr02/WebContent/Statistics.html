@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>SWTPP Chess Portal</title>
+
+<script src="http://chessboardjs.com/js/json3.min.js"></script>
+<script src="http://chessboardjs.com/js/jquery-1.10.1.min.js"></script>
+<script src="http://chessboardjs.com/js/prettify.js"></script>
+<script src="http://chessboardjs.com/js/chessboard.js"></script>
+<script>
+
+$(document).ready(function() {
+	
+   var params = 'usecase=getstatistics';
+   var request = new XMLHttpRequest();
+
+   request.open('GET', '/Chess/ChessServlet?' + params, false);  
+	
+   request.send(params);
+
+   if (request.responseText == '') {
+	   window.location ="/Chess/index.html";
+	   return;
+   }
+   else {	   
+      var userDataJSON = jQuery.parseJSON(request.responseText);
+	  
+	  $('#username').html( 'current user: ' + userDataJSON.userFirstName);
+	  $('#nbWon').html(userDataJSON.nbWon);
+	  $('#nbLost').html(userDataJSON.nbLost);
+	  $('#nbDraw').html(userDataJSON.nbDraw);
+	  $('#quotWon').html(userDataJSON.quotWon);
+	  $('#avgMoves').html(userDataJSON.avgMoves);
+	  
+	  
+   }
+});
+
+</script>
+</head>
+<body>
+<table>
+<tr><td width="50%">
+<h1>SWTPP Chess Portal</h1>
+</td>
+<td>
+<div align="right"><div id="username"></div><a href="logout.html">Log off</a></div>
+</td></tr>
+</table>
+
+Games Won: <div id="nbWon"></div><br>
+Games Lost: <div id="nbLost"></div><br>
+Draw Games: <div id="nbDraw"></div><br>
+Avg Moves:<div id="avgMoves"></div><br>
+Winning Ratio:<div id="quotWon"></div><br>
+
+
+
+
+<br><a href="main.html">Go back</a>
+
+</body>
+</html>
