@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>SWTPP Chess Portal</title>
+
+<script src="http://chessboardjs.com/js/json3.min.js"></script>
+<script src="http://chessboardjs.com/js/jquery-1.10.1.min.js"></script>
+<script src="http://chessboardjs.com/js/prettify.js"></script>
+<script src="http://chessboardjs.com/js/chessboard.js"></script>
+<script>
+
+$(document).ready(function() {
+
+   var params = 'usecase=getuserdata';
+   var request = new XMLHttpRequest();
+
+   request.open('GET', '/Chess/ChessServlet?' + params, false);  
+   request.onreadystatechange = function() {
+	   if (this.responseText == '') {
+		   window.location.href ="/Chess/index.html";
+		   return;
+	   }
+	   else {	   
+	      var userDataJSON = jQuery.parseJSON(request.responseText);
+		  
+		  var chessRows ='<tr><th>ID</th><th>Opponent</th><th></th></tr>';
+		  $.each(userDataJSON.games,function(key, arr){
+		    chessRows +='<td>'+arr.join('</td><td>')+'</td><td><a href="Chess.html?game=' + arr[0] + '" target="_blank">Continue</a></td></tr>';
+		
+		  });
+		
+		  $('#username').html( 'current user: ' + userDataJSON.userFirstName);
+		  $('#games').html(chessRows);
+	   }
+   }
+	
+   request.send(params);
+});
+
+</script>
+</head>
+<body>
+<table>
+<tr><td width="50%">
+<h1>SWTPP Chess Portal</h1>
+</td>
+<td>
+<div align="right"><div id="username"></div><a href="logout.html">Log off</a></div>
+</td></tr>
+</table>
+
+<h2>Your Games</h2>
+
+<table id="games"></table>
+
+<h2>Options</h2>
+
+<br><a href="Chess.html" target="_blank">Start new Game</a>
+<br><a href="Chess.html?bot" target="_blank">Start new Game against Bot</a>
+<br><a href="Statistics.html" >Open Statistics</a>
+<!--  TODO <br><a href="/Chess/ChessServlet?usecase=logout" >Logout</a> -->
+
+</body>
+</html>

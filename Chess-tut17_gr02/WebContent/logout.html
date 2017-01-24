@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Logout</title>
+</head>
+
+<script src="http://chessboardjs.com/js/json3.min.js"></script>
+<script src="http://chessboardjs.com/js/jquery-1.10.1.min.js"></script>
+<script src="http://chessboardjs.com/js/prettify.js"></script>
+<script src="http://chessboardjs.com/js/chessboard.js"></script>
+<script>
+
+$(document).ready(function() {
+	  var params = 'usecase=logout';
+	  var request = new XMLHttpRequest();
+
+	  request.open('GET', '/Chess/ChessServlet?' + params, false);  
+		
+	  request.send(params);
+});
+</script>
+
+<body>
+<h1>SWTPP Chess Portal</h1>
+
+User logged off. <a href="/Chess/index.html">Back to Login</a>
+</body>
+</html>
