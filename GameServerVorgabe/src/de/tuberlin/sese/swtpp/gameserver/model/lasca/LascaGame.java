@@ -227,7 +227,7 @@ public class LascaGame extends Game implements Serializable{
 			 * @param player The player that tries the move
 			 * @return true if the move was performed
 			 */
-		//1 is done in 2 so 2
+		//1 is done in 2 so 2 within 3
 		//TODO is it better to do another attribute?
 		LascaBoardControl bc = new LascaBoardControl();
 		board = bc.fen2array(state);
@@ -240,7 +240,8 @@ public class LascaGame extends Game implements Serializable{
 		if((location.substring(0, 1) == "w" || location.substring(0, 1) == "b") && Math.abs(dir)<1)
 			return false;
 		//normalMove
-		if(Math.abs(dir)==2 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]])){
+		if(Math.abs(dir)==2 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]]) && bc.schlagenMuss(board, colour)){//4
+			//TODO 7,8
 			board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]] = location;
 			location = null;
 			if(colour == "w"){
@@ -254,7 +255,7 @@ public class LascaGame extends Game implements Serializable{
 		//catchMove
 		if(Math.abs(dir)==2 && bc.catchMove(board, moveString, colour) != board){
 			board = bc.catchMove(board, moveString, colour);
-			//TODO set next player and status!!!
+			//TODO set next player and status!!! (7,8)
 			if(!bc.schlagenMuss(board, colour)){
 				if(colour == "w"){
 					setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
