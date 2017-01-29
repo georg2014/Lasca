@@ -25,6 +25,13 @@ public class LascaGame extends Game implements Serializable{
 	// internal representation of the game state
 	// TODO: insert additional game data here
 	String state = "b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w w";
+	String[][] board = {	{"b",null,"b",null,"b",null,"b"},
+							{null,"b",null,"b",null,"b",null},
+							{"b",null,"b",null,"b",null,"b"},
+							{null,null,null,null,null,null,null},
+							{"w",null,"w",null,"w",null,"w"},
+							{null,"w",null,"w",null,"w",null},
+							{"w",null,"w",null,"w",null,"w"}	};
 	
 	/************************
 	 * constructors
@@ -201,8 +208,27 @@ public class LascaGame extends Game implements Serializable{
 	@Override
 	public boolean tryMove(String moveString, Player player) {
 		// TODO: implement
-		// hint: see javadoc comment in super class
-		System.out.println(moveString);
+		// hint: see javadoc comment in super class(Game):
+			/**
+			 * This method checks if the supplied move is possible to perform 
+			 * in the current game state/status and, if so, does it.
+			 * The following has to be checked/might be changed:
+			 * 1- it has to be checked if the move can be performed
+			 * 2---- it is a valid move
+			 * 3---- it is done by the right player
+			 * 4---- there is no other move that the player is forced to perform
+			 * 5- if the move can be performed, the following has to be done:
+			 * 6---- the board state has to be updated (e.g. figures moved/deleted)
+			 * 7---- the board status has to be updated (check if game is finished)
+			 * 8---- the next player has to be set (if move is over, it's next player's turn)
+			 * 
+			 * @param move String representation of move
+			 * @param player The player that tries the move
+			 * @return true if the move was performed
+			 */
+		//1
+		
+		//System.out.println(moveString);
 		boolean move = true;
 		return move;
 	}
