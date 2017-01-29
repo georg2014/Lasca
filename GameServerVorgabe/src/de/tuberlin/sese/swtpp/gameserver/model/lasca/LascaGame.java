@@ -208,6 +208,7 @@ public class LascaGame extends Game implements Serializable{
 	@Override
 	public boolean tryMove(String moveString, Player player) {
 		// TODO: implement
+		//editor: Georg Stahn
 		// hint: see javadoc comment in super class(Game):
 			/**
 			 * This method checks if the supplied move is possible to perform 
@@ -226,10 +227,46 @@ public class LascaGame extends Game implements Serializable{
 			 * @param player The player that tries the move
 			 * @return true if the move was performed
 			 */
-		//1
-		
-		//System.out.println(moveString);
-		boolean move = true;
-		return move;
+		//1 is done in 2 so 2
+		//TODO is it better to do another attribute?
+		LascaBoardControl bc = new LascaBoardControl();
+		board = bc.fen2array(state);
+		String location = board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]];
+		if(board[bc.searchC(moveString)[2]][bc.searchC(moveString)[2]]!=null)
+			return false;
+		String colour = state.substring(state.length()-1);
+		int dir=bc.inReach(board, moveString, colour);//direction in which the player moves
+		//only W and B can move backwards
+		if((location.substring(0, 1) == "w" || location.substring(0, 1) == "b") && Math.abs(dir)<1)
+			return false;
+		//normalMove
+		if(Math.abs(dir)==2 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]])){
+			board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]] = location;
+			location = null;
+			if(colour == "w"){
+				setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
+				return true;
+			}else{
+				setState(bc.array2fen(board).concat(" w"));
+				return true;
+			}
+		}
+		//catchMove
+		if(Math.abs(dir)==2 && bc.catchMove(board, moveString, colour) != board){
+			board = bc.catchMove(board, moveString, colour);
+			//TODO set next player and status!!!
+			if(!bc.schlagenMuss(board, colour)){
+				if(colour == "w"){
+					setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
+					return true;
+				}else{
+					setState(bc.array2fen(board).concat(" w"));
+					return true;
+				}
+			}
+			setState(bc.array2fen(board).concat(" ")+colour);
+			return true;
+		}
+		return false;
 	}
 }

@@ -246,7 +246,7 @@ public class LascaBoardControl implements Serializable{
 		//editor: Jonas Franz Schicke
 		/**
 		 * @param spielfeld
-		 * @param spieler
+		 * @param spieler String! - colour
 		 * @return  boolean: true - es bleibt der spieler an der reihe, da noch geschlagen werden kann/muss
 		 * 					 false - rest 
 		 */
