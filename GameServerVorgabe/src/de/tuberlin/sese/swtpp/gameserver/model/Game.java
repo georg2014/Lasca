@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Game implements Serializable{
-	//test georg
 	private static final long serialVersionUID = 2467695635164175201L;
 	
 	/**********************************
