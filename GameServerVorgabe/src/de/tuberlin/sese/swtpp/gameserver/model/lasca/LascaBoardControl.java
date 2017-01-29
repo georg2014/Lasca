@@ -22,7 +22,7 @@ public class LascaBoardControl implements Serializable{
  This is how we designed the board ;)
 ****************************************************************************/
 	
-	public static String[][] fen2array(String state){
+	public  String[][] fen2array(String state){
 		//editor: Jonas Franz Schicke
 		/** fen2array
 		 * 2D array (chessboard) takes fen (state) !without last bit " b" or " w"
@@ -71,7 +71,7 @@ public class LascaBoardControl implements Serializable{
 		}
 		return gameboard;
 	}
-	public static String array2fen(String[][] board){
+	public  String array2fen(String[][] board){
 		//editor: Jonas Franz Schicke
 		/** array2fen
 		 * 2D array (chessboard) takes fen (state) !without last bit " b" or " w"
@@ -101,7 +101,7 @@ public class LascaBoardControl implements Serializable{
 		return fenString;
 	}
 	
-	public static int[] searchC(String moveString){
+	public  int[] searchC(String moveString){
 		//editor: Georg Stahn
 		/** searchC
 		 * @parameter moveString (a1-b2) 
@@ -120,7 +120,7 @@ public class LascaBoardControl implements Serializable{
 
 /***********************************MOVES*********************************************/
 	
-	public static int inReach(String[][] board, String moveString, String colour){
+	public  int inReach(String[][] board, String moveString, String colour){
 		//editor: Georg Stahn
 		/**
 		 * @parameter 2D array 
@@ -160,7 +160,7 @@ public class LascaBoardControl implements Serializable{
 		}
 		return 0;
 	}
-	public static String[][] catchMove(String[][] board, String moveString, String colour){
+	public  String[][] catchMove(String[][] board, String moveString, String colour){
 		//edtor:Georg Stahn
 		/**
 		 * @param 2d array
@@ -392,7 +392,7 @@ public class LascaBoardControl implements Serializable{
 	}
 		return false;
 	}
-	public static boolean isFinished(String[][] board /*TODO ,Player p*/){
+	public  boolean isFinished(String[][] board /*TODO ,Player p*/){
 		//editor: Georg Stahn
 		/**
 		 * @param 2D array
