@@ -186,19 +186,19 @@ public class LascaBoardControl implements Serializable{
 		//System.err.println("bx:"+bx+" by:"+by);
 		if(board[bx][by]==fieldEmpty){//is the between field free
 
-			System.err.println("empty:"+board[bx][by]);
+			//System.err.println("empty:"+board[bx][by]);
 			return board;
 		}else if(board[bx][by].charAt(0)=='w' || board[bx][by].charAt(0)=='W'){
 			if(enemies != "w"){
 
-				System.err.println("no enemie1");
+				//System.err.println("no enemie1");
 				return board;//same colour
 			}
 			//System.err.println("the between field is topped by a WHITE stone(ENEMIE)");
 		}else if(board[bx][by].charAt(0)=='b' || board[bx][by].charAt(0)=='B'){
 			if(enemies != "b"){
 
-				System.err.println("no enemie2");
+				//System.err.println("no enemie2");
 				return board;//same colour
 			}
 			//System.err.println("the between field is topped by a BLACK stone(ENEMIE)");
@@ -229,7 +229,7 @@ public class LascaBoardControl implements Serializable{
 		//take the stones from board[bx][by] => b (with the frist)
 		String l = board[lx][ly];
 		String b = board[bx][by];
-		String d = board[dx][dy];
+		//String d = board[dx][dy];
 		//b.substring(0, 1);	//first stone of alpa beta
 			///Delete the "catched" stone from board[bx][by]
 		board[bx][by] = b.substring(1, b.length()); 
@@ -239,7 +239,7 @@ public class LascaBoardControl implements Serializable{
 		//Delete the "old" stones from board[lx][ly]board[coordinates[0]][coordinates[1]] = null;
 		board[lx][ly] = null;
 		//System.err.println("all good");
-		//TODO schlagen muss
+		//TODO schlagen muss?
 		return board;
 	}
 	public boolean schlagenMuss(String[][]spielfeld, String spieler){
@@ -392,7 +392,7 @@ public class LascaBoardControl implements Serializable{
 	}
 		return false;
 	}
-	public  boolean isFinished(String[][] board /*TODO ,Player p*/){
+	public  boolean isFinished(String[][] board /*TODO (in isFinished) ,Player p*/){
 		//editor: Georg Stahn
 		/**
 		 * @param 2D array
@@ -404,13 +404,13 @@ public class LascaBoardControl implements Serializable{
 		 * //no opportunity left to move for one player
 		 */
 			//TODO give up
-			/*TODO
+			/*
 			if(p.giveUp)
 				return true;
 			//TODO draw
 			if(p.game.players.value.draw && p.game.players.next.value.draw)
 				return true;
-			TODO*/
+			*/
 			//no stone there of the other colour
 			int w = 0, b=0;
 			for(int h=0; h<board.length;h++){

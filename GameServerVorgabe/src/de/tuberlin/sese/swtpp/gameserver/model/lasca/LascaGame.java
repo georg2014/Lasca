@@ -197,6 +197,7 @@ public class LascaGame extends Game implements Serializable{
 	
 	@Override
 	public void setState(String state) {
+		System.out.println("state: "+state);
 		this.state = state;
 	}
 	
@@ -241,7 +242,7 @@ public class LascaGame extends Game implements Serializable{
 			return false;
 		//normalMove
 		if(Math.abs(dir)==2 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]]) && bc.schlagenMuss(board, colour)){//4
-			//TODO 7,8
+			//TODO 7,8 in try move status and player
 			board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]] = location;
 			location = null;
 			if(colour == "w"){
