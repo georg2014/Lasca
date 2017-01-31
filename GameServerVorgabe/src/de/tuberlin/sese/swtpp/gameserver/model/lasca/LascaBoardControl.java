@@ -110,13 +110,13 @@ public class LascaBoardControl implements Serializable{
 		 * @return coordinate for the 2D array which presents the board
 		 * 		fail : return : -1
 		 * 		else : coordinate={start character, start number, end character, end number}
-		 * 			e.g.:	searchC(a1-b2) returns {0,6,1,5}
+		 * 			e.g.:	searchC(a1-b2) returns {6,0,5,1}
 		 */
 		int[] coordinate={-1,-1,-1,-1};
-		coordinate[1]=(java.lang.Character.getNumericValue(moveString.charAt(0))-10);
 		coordinate[0]=6-(moveString.charAt(1)-49);
-		coordinate[3]=(java.lang.Character.getNumericValue(moveString.charAt(3))-10);
+		coordinate[1]=(java.lang.Character.getNumericValue(moveString.charAt(0))-10);
 		coordinate[2]=6-(moveString.charAt(4)-49);
+		coordinate[3]=(java.lang.Character.getNumericValue(moveString.charAt(3))-10);
 		return coordinate;
 	}
 
