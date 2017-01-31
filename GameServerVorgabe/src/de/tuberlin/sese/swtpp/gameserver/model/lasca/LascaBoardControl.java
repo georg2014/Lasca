@@ -109,7 +109,8 @@ public class LascaBoardControl implements Serializable{
 		 * @parameter moveString (a1-b2) 
 		 * @return coordinate for the 2D array which presents the board
 		 * 		fail : return : -1
-		 * 		else : coordinate={start character, start number, end character, end number}
+		 * 		else : coordinate={start y coordinate, start x coordinate, end y coordinate, end x coordinate}
+		 * 			for the board[][] just board[coordinate[0]][coordinate[1]]
 		 * 			e.g.:	searchC(a1-b2) returns {6,0,5,1}
 		 */
 		int[] coordinate={-1,-1,-1,-1};
@@ -145,14 +146,14 @@ public class LascaBoardControl implements Serializable{
 		int[] coordinates = searchC(moveString);
 		for(int i=1; i<=2; i++){
 			if(Math.abs(coordinates[0]-coordinates[2])==i && Math.abs(coordinates[i]-coordinates[3])==i){
-				if(colour=="w"){
-					if((coordinates[1]-coordinates[3])==i){
+				if(colour.equals("w")){
+					if((coordinates[0]-coordinates[2])==i){
 						return i;
 					}else{
 						return -i;
 					}
-				}else if(colour=="b"){
-					if((coordinates[1]-coordinates[3])==-i){
+				}else if(colour.equals("b")){
+					if((coordinates[0]-coordinates[2])==-i){
 						return i;
 					}else{
 						return -i;
@@ -254,7 +255,7 @@ public class LascaBoardControl implements Serializable{
 		 * @return  boolean: true - es bleibt der spieler an der reihe, da noch geschlagen werden kann/muss
 		 * 					 false - rest 
 		 */
-		if(spieler=="w"){
+		if(spieler.equals("w")){
 			for(int m=0;m<7;m++){
 				if(m==0||m==2||m==4||m==6){//jede zweite Reiche durchgehen
 					if(spielfeld[m][0]!=null){
@@ -321,7 +322,7 @@ public class LascaBoardControl implements Serializable{
 			}
 		return false;
 		}
-		if(spieler=="b"){
+		if(spieler.equals("b")){
 			for(int m=0;m<7;m++){
 				if(m==0||m==2||m==4||m==6){//jede zweite Reiche durchgehen
 					if(spielfeld[m][0]!=null){
