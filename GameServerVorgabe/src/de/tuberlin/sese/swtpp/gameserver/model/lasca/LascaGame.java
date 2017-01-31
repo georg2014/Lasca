@@ -241,12 +241,13 @@ public class LascaGame extends Game implements Serializable{
 		if((location.substring(0, 1) == "w" || location.substring(0, 1) == "b") && dir<1)
 			return false;
 		//normalMove - must be in range & must be free & 
-		if(Math.abs(dir)==1 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]]) && bc.schlagenMuss(board, colour)){//4
+		if(Math.abs(dir)==1 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]]) && !bc.schlagenMuss(board, colour)){//4
 			//TODO 7,8 in try move status and player
 			board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]] = location;
-			location = null;
-			if(colour == "w"){
+			board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]] = null;
+			if(colour.equals("w")){
 				setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
+				nextPlayer = blackPlayer;
 				return true;
 			}else{
 				setState(bc.array2fen(board).concat(" w"));
