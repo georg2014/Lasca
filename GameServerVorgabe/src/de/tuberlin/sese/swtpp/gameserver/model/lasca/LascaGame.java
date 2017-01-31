@@ -235,7 +235,7 @@ public class LascaGame extends Game implements Serializable{
 		String location = board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]];
 		if(board[bc.searchC(moveString)[2]][bc.searchC(moveString)[2]]!=null)
 			return false;
-		String colour = state.substring(state.length());
+		String colour = state.substring(state.length()-1);
 		int dir=bc.inReach(board, moveString, colour);//direction in which the player moves
 		//only W and B can move backwards
 		if((location.substring(0, 1) == "w" || location.substring(0, 1) == "b") && dir<1)

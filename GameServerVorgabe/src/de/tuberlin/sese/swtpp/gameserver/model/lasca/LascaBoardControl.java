@@ -35,9 +35,9 @@ public class LascaBoardControl implements Serializable{
 		int y=0;
 		
 		while(state.length()>0){
-			System.err.println("state.length(): "+state.length());
+			//System.err.println("state.length(): "+state.length());
 			String start = state.substring(0,1);
-			System.err.println("start = state.substring(0,1) "+state.substring(0,1));
+			//System.err.println("start = state.substring(0,1) "+state.substring(0,1));
 			if((x==1||x==3||x==5)&&y==0)y++;
 			switch(start){
 			case "b": 	if(x<7){
@@ -124,7 +124,7 @@ public class LascaBoardControl implements Serializable{
 	
 	public  int inReach(String[][] board, String moveString, String colour){
 		//editor: Georg Stahn
-		/**
+		/** inReach - TODO return 0 when it should not
 		 * @parameter 2D array 
 		 * @parameter move String 
 		 * @parameter colour of player
@@ -160,6 +160,7 @@ public class LascaBoardControl implements Serializable{
 				}
 			}
 		}
+		//TODO inReach returns 0
 		System.err.println("error: inReach (return 0)");
 		return 0;
 	}
