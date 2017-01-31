@@ -231,14 +231,14 @@ public class LascaGame extends Game implements Serializable{
 		//1 is done in 2 so 2 within 3
 		//TODO is it better to do another attribute?
 		LascaBoardControl bc = new LascaBoardControl();
-		board = bc.fen2array(state);
+		board = bc.fen2array(state.substring(0, state.length()-2));
 		String location = board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]];
 		if(board[bc.searchC(moveString)[2]][bc.searchC(moveString)[2]]!=null)
 			return false;
-		String colour = state.substring(state.length()-1);
+		String colour = state.substring(state.length());
 		int dir=bc.inReach(board, moveString, colour);//direction in which the player moves
 		//only W and B can move backwards
-		if((location.substring(0, 1) == "w" || location.substring(0, 1) == "b") && Math.abs(dir)<1)
+		if((location.substring(0, 1) == "w" || location.substring(0, 1) == "b") && dir<1)
 			return false;
 		//normalMove
 		if(Math.abs(dir)==2 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]]) && bc.schlagenMuss(board, colour)){//4

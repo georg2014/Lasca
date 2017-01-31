@@ -47,7 +47,7 @@ public class TryMoveTest {
 		else 
 			assertEquals(game.tryMove(move, blackPlayer), expectedResult);
 	}
-	
+
 	public void assertGameState(String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon) {
 		assertEquals(game.getState(), expectedBoard);
 		assertEquals(game.isWhiteNext(), whiteNext);
@@ -63,12 +63,23 @@ public class TryMoveTest {
 	 * !!!!!!!!! To be implemented !!!!!!!!!!!!
 	 *******************************************/
 	
+	///*
 	@Test
 	public void exampleTest() {
+		startGame("b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w w", true);
+		assertMove("a3-b4", true, true);
+		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/,w,w,w/w,w,w/w,w,w,w b", false, false, false);
+	}
+	//*/
+
+	//TODO: implement test cases of same kind as example here
+	//TODO die @test war in der vorgabe nicht auskommentiert
+	/*
+	@Test
+	public void testExample1() {
 		startGame("b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w", true);
 		assertMove("a3-b4", true, true);
 		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/,w,w,w/w,w,w/w,w,w,w", false, false, false);
 	}
-
-	//TODO: implement test cases of same kind as example here
+	*/
 }

@@ -35,7 +35,9 @@ public class LascaBoardControl implements Serializable{
 		int y=0;
 		
 		while(state.length()>0){
+			System.err.println("state.length(): "+state.length());
 			String start = state.substring(0,1);
+			System.err.println("start = state.substring(0,1) "+state.substring(0,1));
 			if((x==1||x==3||x==5)&&y==0)y++;
 			switch(start){
 			case "b": 	if(x<7){
@@ -78,7 +80,7 @@ public class LascaBoardControl implements Serializable{
 		 * @param fenString array[x][y] x : numbers y : letters both from 0 to 6 
 		 * @return 2D-array
 		 */
-		String fenString = "";		
+		String fenString = "";
 		for(int m=0;m<7;m++){
 			if(m==0||m==2||m==4||m==6){
 				if(board[m][0]!=null) fenString = fenString + board[m][0] + ",";
@@ -158,6 +160,7 @@ public class LascaBoardControl implements Serializable{
 				}
 			}
 		}
+		System.err.println("error: inReach (return 0)");
 		return 0;
 	}
 	public  String[][] catchMove(String[][] board, String moveString, String colour){
