@@ -82,7 +82,7 @@ public class TryMoveTest {
 		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/w,,w,w/w,w,w/w,w,w,w b", false, false, false);
 	}
 	@Test
-	public void testExample2_0() {//TODO catch move w 0
+	public void testExample2_0() {//TODO 3 catch move w 0
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
@@ -91,7 +91,7 @@ public class TryMoveTest {
 		assertGameState("b,b,,/b,b,bb/,wb,bw,b/,,wb/,wb,w,w/ww,,w/,w,,w w", true, false, false);
 	}
 	@Test
-	public void testExample2_1() {//TODO catch move w 1
+	public void testExample2_1() {//TODO 3 catch move w 1
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
@@ -100,7 +100,7 @@ public class TryMoveTest {
 		assertGameState("b,b,Wbb,/b,,bb/,,bw,b/,,wb/,wb,w,w/ww,,w/,w,,w b", false, false, false);
 	}
 	@Test
-	public void testExample3() {//TODO officer normal move to the left w
+	public void testExample3() {//TODO 3 officer normal move to the left w
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
@@ -109,7 +109,7 @@ public class TryMoveTest {
 		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/w,,w,w/w,w,w/w,w,w,w b", false, false, false);
 	}
 	@Test
-	public void testExample4() {//TODO officer normal move to the right w
+	public void testExample4() {//TODO 3 officer normal move to the right w
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
@@ -118,7 +118,7 @@ public class TryMoveTest {
 		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/w,,w,w/w,w,w/w,w,w,w b", false, false, false);
 	}
 	@Test
-	public void testExample5_0() {//TODO officer catch move w 0
+	public void testExample5_0() {//TODO 3 officer catch move w 0
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
@@ -127,7 +127,7 @@ public class TryMoveTest {
 		assertGameState("b,b,,/b,b,bb/,wb,bw,b/,,wb/,wb,w,w/ww,,w/,w,,w w", true, false, false);
 	}
 	@Test
-	public void testExample5_1() {//TODO officer catch move w 1
+	public void testExample5_1() {//TODO 3 officer catch move w 1
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
@@ -136,7 +136,7 @@ public class TryMoveTest {
 		assertGameState("b,b,Wbb,/b,,bb/,,bw,b/,,wb/,wb,w,w/ww,,w/,w,,w b", false, false, false);
 	}
 	@Test
-	public void testExample6() {//TODO normal move to officer
+	public void testExample6() {//TODO 3 normal move to officer
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon

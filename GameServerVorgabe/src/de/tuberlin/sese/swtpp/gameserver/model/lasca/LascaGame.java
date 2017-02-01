@@ -1,8 +1,10 @@
 package de.tuberlin.sese.swtpp.gameserver.model.lasca;
 
 import java.io.Serializable;
+import java.util.List;
 
 import de.tuberlin.sese.swtpp.gameserver.model.Game;
+import de.tuberlin.sese.swtpp.gameserver.model.Move;
 import de.tuberlin.sese.swtpp.gameserver.model.Player;
 
 /**
@@ -25,13 +27,6 @@ public class LascaGame extends Game implements Serializable{
 	// internal representation of the game state
 	// TODO: insert additional game data here
 	String state = "b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w w";
-	String[][] board = {	{"b",null,"b",null,"b",null,"b"},
-							{null,"b",null,"b",null,"b",null},
-							{"b",null,"b",null,"b",null,"b"},
-							{null,null,null,null,null,null,null},
-							{"w",null,"w",null,"w",null,"w"},
-							{null,"w",null,"w",null,"w",null},
-							{"w",null,"w",null,"w",null,"w"}	};
 	
 	/************************
 	 * constructors
@@ -228,9 +223,34 @@ public class LascaGame extends Game implements Serializable{
 			 * @param player The player that tries the move
 			 * @return true if the move was performed
 			 */
+		LascaBoard lb = new LascaBoard(state);
+		if(!isFinished()){
+			LascaMove lm = new LascaMove(moveString, lb.getGameboard(), getState().substring(getState().length()-1));
+			lm.normalMove(lm.schlagenMuss());
+			lm.catchMove();
+			if(state!=lb.array2fen().concat(" ")+lm.getColour()){
+				if(lm.schlagenMuss()){
+					setState(lb.array2fen().concat(" ")+lm.getColour());
+					return true;
+				}
+				if(lm.getColour().equals("w")){
+					setNextPlayer(blackPlayer);
+					//setHistory(getHistory().add(move));
+					setState(lb.array2fen().concat(" b"));
+					return true;
+				}else{
+					setNextPlayer(whitePlayer);
+					//setHistory(getHistory().add(move));
+					setState(lb.array2fen().concat(" w"));
+					return true;
+				}
+			}
+		}
+		if(isFinished())
+			finish(player);
+		return false;
 		//1 is done in 2 so 2 within 3
-		/*TODO die komplexität ist zu groß wir müssen uns eine beseere struktur ausdenken! hierzu meine gedanken!
-		//TODO is it better to do another attribute?
+		/*TODO 0 die komplexität ist zu groß wir müssen uns eine beseere struktur ausdenken! hierzu meine gedanken!
 		LascaBoardControl bc = new LascaBoardControl();
 		board = bc.fen2array(state.substring(0, state.length()-2));
 		String location = board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]];
@@ -243,7 +263,7 @@ public class LascaGame extends Game implements Serializable{
 			return false;
 		//normalMove - must be in range & must be free & 
 		if(Math.abs(dir)==1 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]]) && !bc.schlagenMuss(board, colour)){//4
-			//TODO 7,8 in try move status and player
+			//TODO 1 setNextPlayer(player) and setHistory(List<Move> history) and finish(Player player)
 			board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]] = location;
 			board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]] = null;
 			if(colour.equals("w")){
@@ -258,7 +278,7 @@ public class LascaGame extends Game implements Serializable{
 		//catchMove
 		if(Math.abs(dir)==2 && bc.catchMove(board, moveString, colour) != board){
 			board = bc.catchMove(board, moveString, colour);
-			//TODO set next player and status!!! (7,8)
+			//TODO 1 setNextPlayer(player) and setHistory(List<Move> history) and finish(Player player)
 			if(!bc.schlagenMuss(board, colour)){
 				if(colour == "w"){
 					setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
@@ -273,7 +293,6 @@ public class LascaGame extends Game implements Serializable{
 			setState(bc.array2fen(board).concat(" ")+colour);
 			return true;
 		}
-		return false;
 		*/
 	}
 }
