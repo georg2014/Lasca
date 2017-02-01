@@ -229,6 +229,7 @@ public class LascaGame extends Game implements Serializable{
 			 * @return true if the move was performed
 			 */
 		//1 is done in 2 so 2 within 3
+		/*TODO die komplexität ist zu groß wir müssen uns eine beseere struktur ausdenken! hierzu meine gedanken!
 		//TODO is it better to do another attribute?
 		LascaBoardControl bc = new LascaBoardControl();
 		board = bc.fen2array(state.substring(0, state.length()-2));
@@ -261,9 +262,11 @@ public class LascaGame extends Game implements Serializable{
 			if(!bc.schlagenMuss(board, colour)){
 				if(colour == "w"){
 					setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
+					nextPlayer = blackPlayer;
 					return true;
 				}else{
 					setState(bc.array2fen(board).concat(" w"));
+					nextPlayer = whitePlayer;
 					return true;
 				}
 			}
@@ -271,5 +274,6 @@ public class LascaGame extends Game implements Serializable{
 			return true;
 		}
 		return false;
+		*/
 	}
 }
