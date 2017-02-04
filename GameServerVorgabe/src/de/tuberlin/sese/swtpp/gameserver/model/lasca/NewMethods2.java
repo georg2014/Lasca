@@ -168,8 +168,26 @@ public class NewMethods2 {
 		return fenString;
 	}
 	
-	public static String[][] normalMove(){
-		return null;
+	public static String[][] normalMove(String moveString, String[][] board){
+		/**
+		 * @parameter moveString
+		 * @parameter 2D array
+		 * does the normal Move if it can be performed!
+		 * 		checks:
+		 * 			schlagenMuss
+		 * 			destination is free
+		 * 		normalMove:
+		 * 			swap destination and location
+		 * 	@return 2D array
+		 */
+		if(schlagenMuss)
+			return board;
+		int[] coordinates = searchC(moveString);
+		if(board[coordinates[2]][coordinates[3]]!=null){
+			board[coordinates[2]][coordinates[3]]=board[coordinates[0]][coordinates[1]];
+			board[coordinates[0]][coordinates[1]]=null;
+		}
+		return board;
 	}
 
 }
