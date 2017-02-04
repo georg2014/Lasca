@@ -27,6 +27,7 @@ public class LascaGame extends Game implements Serializable{
 	// internal representation of the game state
 	// TODO: insert additional game data here
 	String state = "b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w w";
+	String[][] board;
 	
 	/************************
 	 * constructors
@@ -223,25 +224,26 @@ public class LascaGame extends Game implements Serializable{
 			 * @param player The player that tries the move
 			 * @return true if the move was performed
 			 */
-		LascaBoard lb = new LascaBoard(state);
+		/*
+		LascaBoard lb = new LascaBoard(state.substring(0, state.length()-2));
 		if(!isFinished()){
 			LascaMove lm = new LascaMove(moveString, lb.getGameboard(), getState().substring(getState().length()-1));
 			lm.normalMove(lm.schlagenMuss());
 			lm.catchMove();
 			if(state!=lb.array2fen().concat(" ")+lm.getColour()){
 				if(lm.schlagenMuss()){
-					setState(lb.array2fen().concat(" ")+lm.getColour());
+					setState(lb.array2fen()*//*.concat(" ")+lm.getColour()*//*);
 					return true;
 				}
 				if(lm.getColour().equals("w")){
 					setNextPlayer(blackPlayer);
 					//setHistory(getHistory().add(move));
-					setState(lb.array2fen().concat(" b"));
+					setState(lb.array2fen()*//*.concat(" b")*//*);
 					return true;
 				}else{
 					setNextPlayer(whitePlayer);
 					//setHistory(getHistory().add(move));
-					setState(lb.array2fen().concat(" w"));
+					setState(lb.array2fen()*//*.concat(" w")*//*);
 					return true;
 				}
 			}
@@ -249,8 +251,9 @@ public class LascaGame extends Game implements Serializable{
 		if(isFinished())
 			finish(player);
 		return false;
+		*/
 		//1 is done in 2 so 2 within 3
-		/*TODO 0 die komplexität ist zu groß wir müssen uns eine beseere struktur ausdenken! hierzu meine gedanken!
+		//TODO 0 die komplexität ist zu groß wir müssen uns eine beseere struktur ausdenken! hierzu meine gedanken!
 		LascaBoardControl bc = new LascaBoardControl();
 		board = bc.fen2array(state.substring(0, state.length()-2));
 		String location = board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]];
@@ -293,6 +296,7 @@ public class LascaGame extends Game implements Serializable{
 			setState(bc.array2fen(board).concat(" ")+colour);
 			return true;
 		}
-		*/
+		return false;
+		//*/
 	}
 }

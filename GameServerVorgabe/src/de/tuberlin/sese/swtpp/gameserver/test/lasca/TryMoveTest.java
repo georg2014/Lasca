@@ -71,12 +71,14 @@ public class TryMoveTest {
 	}
 
 	//TODO: implement test cases of same kind as example here
-/*************************************************TRUE**********************************************************/	
+/*************************************************TRUE**********************************************************/
+	///*
 	@Test
 	public void testExample1() {//normal move to the left w
 		//startGame: String move, boolean white, boolean expectedResult
 		//assertMove: String move, boolean white, boolean expectedResult
 		//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
+		System.err.println("test1:");
 		startGame("b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w w", true);
 		assertMove("c3-b4", true, true);
 		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/w,,w,w/w,w,w/w,w,w,w b", false, false, false);
@@ -144,4 +146,5 @@ public class TryMoveTest {
 		assertMove("d6-e7", true, true);
 		assertGameState("b,b,Wbb,b/,,/,bw,b,b/,bw,/w,w,wb,/w,,w/w,,w,Bw b", false, false, false);
 	}
+	//*/
 }
