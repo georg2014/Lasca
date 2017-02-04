@@ -224,79 +224,15 @@ public class LascaGame extends Game implements Serializable{
 			 * @param player The player that tries the move
 			 * @return true if the move was performed
 			 */
-		/*
-		LascaBoard lb = new LascaBoard(state.substring(0, state.length()-2));
-		if(!isFinished()){
-			LascaMove lm = new LascaMove(moveString, lb.getGameboard(), getState().substring(getState().length()-1));
-			lm.normalMove(lm.schlagenMuss());
-			lm.catchMove();
-			if(state!=lb.array2fen().concat(" ")+lm.getColour()){
-				if(lm.schlagenMuss()){
-					setState(lb.array2fen()*//*.concat(" ")+lm.getColour()*//*);
-					return true;
-				}
-				if(lm.getColour().equals("w")){
-					setNextPlayer(blackPlayer);
-					//setHistory(getHistory().add(move));
-					setState(lb.array2fen()*//*.concat(" b")*//*);
-					return true;
-				}else{
-					setNextPlayer(whitePlayer);
-					//setHistory(getHistory().add(move));
-					setState(lb.array2fen()*//*.concat(" w")*//*);
-					return true;
-				}
-			}
-		}
-		if(isFinished())
-			finish(player);
-		return false;
-		*/
-		//1 is done in 2 so 2 within 3
-		//TODO 0 die komplexität ist zu groß wir müssen uns eine beseere struktur ausdenken! hierzu meine gedanken!
-		LascaBoardControl bc = new LascaBoardControl();
-		board = bc.fen2array(state.substring(0, state.length()-2));
-		String location = board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]];
-		if(board[bc.searchC(moveString)[2]][bc.searchC(moveString)[2]]!=null)
-			return false;
-		String colour = state.substring(state.length()-1);
-		int dir=bc.inReach(board, moveString, colour);//direction in which the player moves
-		//only W and B can move backwards
-		if((location.substring(0, 1) == "w" || location.substring(0, 1) == "b") && dir<1)
-			return false;
-		//normalMove - must be in range & must be free & 
-		if(Math.abs(dir)==1 && (null == board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]]) && !bc.schlagenMuss(board, colour)){//4
-			//TODO 1 setNextPlayer(player) and setHistory(List<Move> history) and finish(Player player)
-			board[bc.searchC(moveString)[2]][bc.searchC(moveString)[3]] = location;
-			board[bc.searchC(moveString)[0]][bc.searchC(moveString)[1]] = null;
-			if(colour.equals("w")){
-				setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
-				nextPlayer = blackPlayer;
-				return true;
-			}else{
-				setState(bc.array2fen(board).concat(" w"));
-				return true;
-			}
-		}
-		//catchMove
-		if(Math.abs(dir)==2 && bc.catchMove(board, moveString, colour) != board){
-			board = bc.catchMove(board, moveString, colour);
-			//TODO 1 setNextPlayer(player) and setHistory(List<Move> history) and finish(Player player)
-			if(!bc.schlagenMuss(board, colour)){
-				if(colour == "w"){
-					setState(bc.array2fen(board).concat(" b"));// dont forget to concat the colour on the state
-					nextPlayer = blackPlayer;
-					return true;
-				}else{
-					setState(bc.array2fen(board).concat(" w"));
-					nextPlayer = whitePlayer;
-					return true;
-				}
-			}
-			setState(bc.array2fen(board).concat(" ")+colour);
-			return true;
-		}
-		return false;
-		//*/
+		System.out.println("Am Anfang");
+		String[][] board = NewMethods2.fenToArray(state);
+		System.out.println("Nach fenToArray");
+		board = NewMethods2.catchMove(board, moveString, "w");
+		System.out.println("nach catchMove");
+		String fenString = NewMethods2.arrayToString(board);
+		System.out.println("nach arraytotring");
+		setState(fenString);
+		System.out.println("neuer fenString: " + fenString);
+		return true;
 	}
 }
