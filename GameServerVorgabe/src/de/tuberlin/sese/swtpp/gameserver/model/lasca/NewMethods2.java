@@ -1,6 +1,7 @@
 package de.tuberlin.sese.swtpp.gameserver.model.lasca;
 
 public class NewMethods2 {
+	//test fuer k´jonas
 
 public static String[][] fenToArray(String state){
 	
