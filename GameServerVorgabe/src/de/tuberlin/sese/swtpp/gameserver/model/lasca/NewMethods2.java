@@ -168,26 +168,237 @@ public class NewMethods2 {
 		return fenString;
 	}
 	
-	public static String[][] normalMove(String moveString, String[][] board){
-		/**
+	public static String[][] normalMove(String moveString, String[][] board, String colour){
+		/** normalMove
 		 * @parameter moveString
 		 * @parameter 2D array
 		 * does the normal Move if it can be performed!
 		 * 		checks:
+		 * 			right player - see rightColour
+		 * 			tries normal Move
 		 * 			schlagenMuss
+		 * 			officer Move
 		 * 			destination is free
 		 * 		normalMove:
 		 * 			swap destination and location
 		 * 	@return 2D array
 		 */
-		if(schlagenMuss)
-			return board;
-		int[] coordinates = searchC(moveString);
-		if(board[coordinates[2]][coordinates[3]]!=null){
-			board[coordinates[2]][coordinates[3]]=board[coordinates[0]][coordinates[1]];
-			board[coordinates[0]][coordinates[1]]=null;
+		int dir = inReach(board, moveString, colour);
+		if(rightColour(moveString, board, colour)){
+			if(Math.abs(dir)==1){
+				if(schlagenMuss(board, colour))
+					return board;
+				int[] coordinates = searchC(moveString);
+				if(dir == 1 || (dir == -1 && board[coordinates[0]][coordinates[1]].charAt(0)>'A')){
+					if(board[coordinates[2]][coordinates[3]]==null){
+						board[coordinates[2]][coordinates[3]]=board[coordinates[0]][coordinates[1]];
+						board[coordinates[0]][coordinates[1]]=null;
+					}
+				}
+			}
 		}
 		return board;
+	}
+	
+	private static boolean rightColour(String moveString, String[][] board, String colour){
+		int[] coordinates = searchC(moveString);
+		String bc;
+		if(colour == "w"){
+			bc = "W";
+		}else{
+			bc = "B";
+		}
+		return board[coordinates[0]][coordinates[1]] != null && (board[coordinates[0]][coordinates[1]].substring(0, 1).equals(colour) || board[coordinates[0]][coordinates[1]].substring(0, 1).equals(bc));
+	}
+	
+	public static int inReach(String[][] board, String moveString, String colour){
+		/**
+		 * @parameter 2D array 
+		 * @parameter move String 
+		 * @parameter colour of player
+		 * 1.normal move 
+		 * 		1.1 change itself for 1 
+		 * 2.catch move
+		 * 		2.1 change itself for 2 
+		 * @return 	0 for nothing right 
+		 * 			1 for 1.forward 
+		 * 			-1 for 1.backwards 
+		 * 			2 for 2.forward
+		 * 			-2 for 2.backwards
+		 */
+			/*
+			System.out.println(colour);
+			System.out.println(moveString);
+			*/
+		int[] coordinates = searchC(moveString);
+		for(int i=1; i<=2; i++){
+			if(Math.abs(coordinates[0]-coordinates[2])==i && Math.abs(coordinates[i]-coordinates[3])==i){
+				if(colour=="w"){
+					if((coordinates[1]-coordinates[3])==i){
+						return i;
+					}else{
+						return -i;
+					}
+				}else if(colour=="b"){
+					if((coordinates[1]-coordinates[3])==-i){
+						return i;
+					}else{
+						return -i;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+	
+	public static boolean schlagenMuss(String[][]spielfeld, String spieler){
+		/**
+		 * @param spielfeld
+		 * @param spieler
+		 * @return  boolean: true - es bleibt der spieler an der reihe, da noch geschlagen werden kann/muss
+		 * 					 false - rest 
+		 */
+		if(spieler=="w"){
+			for(int m=0;m<7;m++){
+				if(m==0||m==2||m==4||m==6){//jede zweite Reiche durchgehen
+					if(spielfeld[m][0]!=null){
+						String farbe = spielfeld[m][0].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m-2][2]==null&&spielfeld[m-1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][1].substring(0,1)))return true;}//farbe und farbe des nächsten Feldes(rechts runter) sind nicht gleich
+						}catch(ArrayIndexOutOfBoundsException exception){
+	
+						}
+					};
+					if(spielfeld[m][2]!=null){
+						String farbe = spielfeld[m][2].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m-2][4]==null&&spielfeld[m-1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][3].substring(0,1)))return true;}//farbe und farbe des nächsten Feldes(rechts runter) sind nicht gleich
+							if(spielfeld[m-2][0]==null&&spielfeld[m-1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
+	
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][1].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){
+							
+						}
+					};
+					if(spielfeld[m][4]!=null){
+						String farbe = spielfeld[m][4].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m-2][6]==null&&spielfeld[m-1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][5].substring(0,1)))return true;}
+							if(spielfeld[m-2][2]==null&&spielfeld[m-1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][3].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+					if(spielfeld[m][6]!=null);
+				}
+				if(m==1||m==3||m==5){
+					if(spielfeld[m][1]!=null){
+						String farbe = spielfeld[m][1].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m-2][3]==null&&spielfeld[m-1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][2].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+					if(spielfeld[m][3]!=null){
+						String farbe = spielfeld[m][3].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m-2][5]==null&&spielfeld[m-1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][4].substring(0,1)))return true;}
+							if(spielfeld[m-2][1]==null&&spielfeld[m-1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][2].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+					if(spielfeld[m][5]!=null){
+						String farbe = spielfeld[m][5].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m-2][3]==null&&spielfeld[m-1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m-1][4].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+				}
+			}
+		return false;
+		}
+		if(spieler=="b"){
+			for(int m=0;m<7;m++){
+				if(m==0||m==2||m==4||m==6){//jede zweite Reiche durchgehen
+					if(spielfeld[m][0]!=null){
+						String farbe = spielfeld[m][0].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m+2][2]==null&&spielfeld[m+1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][1].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){
+							
+						}
+					};
+					if(spielfeld[m][2]!=null){
+						String farbe = spielfeld[m][2].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m+2][4]==null&&spielfeld[m+1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][3].substring(0,1)))return true;}
+							if(spielfeld[m+2][0]==null&&spielfeld[m+1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][1].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){
+							
+						}
+					};
+					if(spielfeld[m][4]!=null){
+						String farbe = spielfeld[m][4].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m+2][6]==null&&spielfeld[m+1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][5].substring(0,1)))return true;}
+							if(spielfeld[m+2][2]==null&&spielfeld[m+1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][3].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+					if(spielfeld[m][6]!=null){
+						String farbe = spielfeld[m][6].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m+2][4]==null&&spielfeld[m+1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][5].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+				}
+				if(m==1||m==3||m==5){
+					if(spielfeld[m][1]!=null){
+						String farbe = spielfeld[m][1].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m+2][3]==null&&spielfeld[m+1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][2].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+					if(spielfeld[m][3]!=null){
+						String farbe = spielfeld[m][3].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m+2][5]==null&&spielfeld[m+1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][4].substring(0,1)))return true;}
+							if(spielfeld[m+2][1]==null&&spielfeld[m+1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][2].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+					if(spielfeld[m][5]!=null){
+						String farbe = spielfeld[m][5].substring(0, 1);//oberste farbe
+						try{
+							if(spielfeld[m+2][3]==null&&spielfeld[m+1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
+								if(!farbe.equalsIgnoreCase(spielfeld[m+1][4].substring(0,1)))return true;}
+						}catch(ArrayIndexOutOfBoundsException exception){						
+						}
+					};
+				}
+			}
+			return false;
+	}
+		return false;
 	}
 
 }
