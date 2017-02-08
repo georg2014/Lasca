@@ -400,5 +400,42 @@ public class NewMethods2 {
 	}
 		return false;
 	}
+	public static String[][] toOfficer(String [][] board, String colour){
+		if(colour=="w"){
+			try{
+				if(board[0][0]!=null){
+					if(board[0][0].substring(0,1)=="w")
+						board[0][0]= "W" + board[0][0].substring(1,board[0][0].length());}
+				if(board[0][2]!=null){
+					if(board[0][2].substring(0,1)=="w")
+						board[0][2]= "W" + board[0][2].substring(1,board[0][2].length());}
+				if(board[0][4]!=null){
+					if(board[0][4].substring(0,1)=="w")
+						board[0][4]= "W" + board[0][4].substring(1,board[0][4].length());}
+				if(board[0][6]!=null){
+					if(board[0][6].substring(0,1)=="w")
+						board[0][6]= "W" + board[0][6].substring(1,board[0][6].length());}
+				
+			}catch(Exception exception){System.out.println("EXCEPTION !!!!!!!!!!!!!!!");}
+		}
+		if(colour=="b"){
+			try{
+			if(board[6][0]!=null){
+				if(board[6][0].substring(0,1)=="b")
+					board[6][0]= "B" + board[6][0].substring(1,board[6][0].length());}
+			if(board[6][2]!=null){
+				if(board[6][2].substring(0,1)=="b")
+					board[6][2]= "B" + board[6][2].substring(1,board[6][2].length());}
+			if(board[6][4]!=null){
+				if(board[6][4].substring(0,1)=="b")
+					board[6][4]= "B" + board[6][4].substring(1,board[6][4].length());}
+			if(board[6][6]!=null){
+				if(board[6][6].substring(0,1)=="b")
+					board[6][6]= "B" + board[6][6].substring(1,board[6][6].length());}
+				
+			}catch(Exception exception){}
+		}
+		return board;
+	}
 
 }
