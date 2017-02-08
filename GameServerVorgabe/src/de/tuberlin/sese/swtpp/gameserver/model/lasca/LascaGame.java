@@ -28,6 +28,7 @@ public class LascaGame extends Game implements Serializable{
 	// TODO: insert additional game data here
 	String state = "b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w w";
 	String[][] board;
+	String playersTurn = "w";
 	
 	/************************
 	 * constructors
@@ -224,199 +225,60 @@ public class LascaGame extends Game implements Serializable{
 			 * @param player The player that tries the move
 			 * @return true if the move was performed
 			 */
-		System.out.println("Am Anfang");
 		String[][] board = NewMethods2.fenToArray(state);
-		System.out.println("Nach fenToArray");
-		board = NewMethods2.catchMove(board, moveString, "w");
-		System.out.println("nach catchMove");
+		if(player.equals(whitePlayer))this.playersTurn="w";
+		if(player.equals(blackPlayer))this.playersTurn="b";
+		
+		if(NewMethods2.schlagenMuss(board,this.playersTurn)){//if player has to strike/catch
+			board = NewMethods2.catchMove(board, moveString, this.playersTurn);//catchMove
+	 		String fenString = NewMethods2.arrayToString(board);
+			if(this.state.equals(fenString))			
+				return false;//if board has not changed
+			else{ //if board has changed
+				if(this.playersTurn=="w"){//if white must play
+			 		if(!NewMethods2.schlagenMuss(board,"w")){//if white player can�t strike/catch
+			 			System.out.println("IN W");
+						board = NewMethods2.toOfficer(board, this.playersTurn);
+				 		fenString = NewMethods2.arrayToString(board);
+				 		setState(fenString);
+			 			this.setNextPlayer(blackPlayer);//change to next player
+			 			this.playersTurn="b";
+			 		}
+			 		return true;//if board has changed
+				}else{//if black must play
+			 		if(!NewMethods2.schlagenMuss(board,"b")){//if black player can�t strike/catch
+			 			System.out.println("IN B");
+						board = NewMethods2.toOfficer(board, this.playersTurn);
+				 		fenString = NewMethods2.arrayToString(board);
+				 		setState(fenString);
+			 			this.setNextPlayer(whitePlayer);//change to next player
+			 			this.playersTurn="w";
+			 		}
+			 		return true;//if board has changed
+				}
+			}
+		}else{
+	
+		// board = NewMethods2.normalMove(moveString, board);//normalMove
+		board = NewMethods2.normalMove(moveString, board,this.playersTurn);//normalMove
+		board = NewMethods2.toOfficer(board, this.playersTurn);
 		String fenString = NewMethods2.arrayToString(board);
-		System.out.println("nach arraytotring");
-		setState(fenString);
-		System.out.println("neuer fenString: " + fenString);
-		return true;
+		if(this.state.equals(fenString))return false;//if board has not changed
+		else{
+			if(this.playersTurn=="w"){
+				setState(fenString);
+				this.setNextPlayer(blackPlayer);
+				this.playersTurn="b";
+				// }
+				return true;//if board has changed
+			}else{
+				setState(fenString);
+				this.setNextPlayer(whitePlayer);
+				this.playersTurn="w";
+				// }
+				return true;//if board has changed
+			}
+			}
+		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		public static boolean schlagenMuss(String[][]spielfeld){
-
-		/**
-		 * SchlagenMussRauf
-		 */
-		
-		for(int m=0;m<7;m++){
-			if(m==0||m==2||m==4||m==6){//jede zweite Reiche durchgehen
-				if(spielfeld[m][0]!=null && !spielfeld[m][0].substring(0,1).equals("b")){
-					String farbe = spielfeld[m][0].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m-2][2]==null&&spielfeld[m-1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][1].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){
-						
-					}
-				};
-				if(spielfeld[m][2]!=null && !spielfeld[m][2].substring(0,1).equals("b")){
-					String farbe = spielfeld[m][2].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m-2][4]==null&&spielfeld[m-1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][3].substring(0,1)))return true;}
-						if(spielfeld[m-2][0]==null&&spielfeld[m-1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][1].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){
-						
-					}
-				};
-				if(spielfeld[m][4]!=null && !spielfeld[m][4].substring(0,1).equals("b")){
-					String farbe = spielfeld[m][4].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m-2][6]==null&&spielfeld[m-1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][5].substring(0,1)))return true;}
-						if(spielfeld[m-2][2]==null&&spielfeld[m-1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][3].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-				if(spielfeld[m][6]!=null && !spielfeld[m][6].substring(0,1).equals("b")){
-					String farbe = spielfeld[m][6].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m-2][4]==null&&spielfeld[m-1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][5].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-			}
-			if(m==1||m==3||m==5){
-				if(spielfeld[m][1]!=null && !spielfeld[m][1].substring(0,1).equals("b")){
-					String farbe = spielfeld[m][1].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m-2][3]==null&&spielfeld[m-1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][2].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-				if(spielfeld[m][3]!=null && !spielfeld[m][3].substring(0,1).equals("b")){
-					String farbe = spielfeld[m][3].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m-2][5]==null&&spielfeld[m-1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][4].substring(0,1)))return true;}
-						if(spielfeld[m-2][1]==null&&spielfeld[m-1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][2].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-				if(spielfeld[m][5]!=null && !spielfeld[m][5].substring(0,1).equals("b")){
-					String farbe = spielfeld[m][5].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m-2][3]==null&&spielfeld[m-1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m-1][4].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-			}
-		}	
-		
-		
-		/**
-		 * SchlagenMussRunter
-		 */
-		for(int m=0;m<7;m++){
-			if(m==0||m==2||m==4||m==6){//jede zweite Reiche durchgehen
-				if(spielfeld[m][0]!=null && !spielfeld[m][0].substring(0,1).equals("w")){
-					String farbe = spielfeld[m][0].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m+2][2]==null&&spielfeld[m+1][1]!=null){//auf rechtem,unteren Platz steht einer und übernächster,unterer ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][1].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){
-						
-					}
-				};
-				if(spielfeld[m][2]!=null && !spielfeld[m][2].substring(0,1).equals("w")){
-					String farbe = spielfeld[m][2].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m+2][4]==null&&spielfeld[m+1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][3].substring(0,1)))return true;}
-						if(spielfeld[m+2][0]==null&&spielfeld[m+1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][1].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){
-						
-					}
-				};
-				if(spielfeld[m][4]!=null && !spielfeld[m][4].substring(0,1).equals("w")){
-					String farbe = spielfeld[m][4].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m+2][6]==null&&spielfeld[m+1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][5].substring(0,1)))return true;}
-						if(spielfeld[m+2][2]==null&&spielfeld[m+1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][3].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-				if(spielfeld[m][6]!=null && !spielfeld[m][6].substring(0,1).equals("w")){
-					String farbe = spielfeld[m][6].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m+2][4]==null&&spielfeld[m+1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][5].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-			}
-			if(m==1||m==3||m==5){
-				if(spielfeld[m][1]!=null && !spielfeld[m][1].substring(0,1).equals("w")){
-					String farbe = spielfeld[m][1].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m+2][3]==null&&spielfeld[m+1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][2].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-				if(spielfeld[m][3]!=null && !spielfeld[m][3].substring(0,1).equals("w")){
-					String farbe = spielfeld[m][3].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m+2][5]==null&&spielfeld[m+1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][4].substring(0,1)))return true;}
-						if(spielfeld[m+2][1]==null&&spielfeld[m+1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][2].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-				if(spielfeld[m][5]!=null && !spielfeld[m][5].substring(0,1).equals("w")){
-					String farbe = spielfeld[m][5].substring(0, 1);//oberste farbe
-					try{
-						if(spielfeld[m+2][3]==null&&spielfeld[m+1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-							if(!farbe.equalsIgnoreCase(spielfeld[m+1][4].substring(0,1)))return true;}
-					}catch(ArrayIndexOutOfBoundsException exception){						
-					}
-				};
-			}
-		}
-		return false;
-		}
-	
-	
 }
