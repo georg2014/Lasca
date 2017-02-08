@@ -124,6 +124,7 @@ public class NewMethods2 {
 		//TODO schlagen muss
 		return board;
 	}
+	
 	public static int[] searchC(String moveString){
 		/**
 		 * @parameter moveString (a1-b2) 
@@ -400,6 +401,7 @@ public class NewMethods2 {
 	}
 		return false;
 	}
+	
 	public static String[][] toOfficer(String [][] board, String colour){
 		if(colour=="w"){
 			try{
@@ -437,6 +439,7 @@ public class NewMethods2 {
 		}
 		return board;
 	}
+	
 	public static boolean isFinished(String[][] board){
 		/**
 		 * @param 2D array

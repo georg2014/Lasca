@@ -26,8 +26,8 @@ public class LascaGame extends Game implements Serializable{
 
 	// internal representation of the game state
 	// TODO: insert additional game data here
-	String state = "b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w w";
-	String[][] board;
+	String state = "b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w";
+//	String[][] board;
 	String playersTurn = "w";
 	
 	/************************
@@ -232,7 +232,7 @@ public class LascaGame extends Game implements Serializable{
 		if(NewMethods2.schlagenMuss(board,this.playersTurn)){//if player has to strike/catch
 			board = NewMethods2.catchMove(board, moveString, this.playersTurn);//catchMove
 	 		String fenString = NewMethods2.arrayToString(board);
-			if(this.state.equals(fenString))			
+			if(this.state.equals(fenString))
 				return false;//if board has not changed
 			else{ //if board has changed
 				if(this.playersTurn=="w"){//if white must play
@@ -258,26 +258,25 @@ public class LascaGame extends Game implements Serializable{
 				}
 			}
 		}else{
-	
-		// board = NewMethods2.normalMove(moveString, board);//normalMove
-		board = NewMethods2.normalMove(moveString, board,this.playersTurn);//normalMove
-		board = NewMethods2.toOfficer(board, this.playersTurn);
-		String fenString = NewMethods2.arrayToString(board);
-		if(this.state.equals(fenString))return false;//if board has not changed
-		else{
-			if(this.playersTurn=="w"){
-				setState(fenString);
-				this.setNextPlayer(blackPlayer);
-				this.playersTurn="b";
-				// }
-				return true;//if board has changed
-			}else{
-				setState(fenString);
-				this.setNextPlayer(whitePlayer);
-				this.playersTurn="w";
-				// }
-				return true;//if board has changed
-			}
+			// board = NewMethods2.normalMove(moveString, board);//normalMove
+			board = NewMethods2.normalMove(moveString, board,this.playersTurn);//normalMove
+			board = NewMethods2.toOfficer(board, this.playersTurn);
+			String fenString = NewMethods2.arrayToString(board);
+			if(this.state.equals(fenString))return false;//if board has not changed
+			else{
+				if(this.playersTurn=="w"){
+					setState(fenString);
+					this.setNextPlayer(blackPlayer);
+					this.playersTurn="b";
+					// }
+					return true;//if board has changed
+				}else{
+					setState(fenString);
+					this.setNextPlayer(whitePlayer);
+					this.playersTurn="w";
+					// }
+					return true;//if board has changed
+				}
 			}
 		}
 	}
