@@ -437,5 +437,80 @@ public class NewMethods2 {
 		}
 		return board;
 	}
+	public static boolean isFinished(String[][] board){
+		/**
+		 * @param 2D array
+		 * @return boolean - true:game is finished; false:game is still on the go
+		 * //no stone there of the other colour
+		 * //no opportunity left to move for one player
+		 */
+			
+			//no stone there of the other colour
+			int w = 0, b=0;
+			for(int h=0; h<board.length;h++){
+				for(int j=0; j<board[0].length;j++){
+					if(board[h][j]!=null){
+						if(board[h][j].substring(0, 1)== "w" || board[h][j].substring(0, 1)=="W"){
+							w++;
+						}else if(board[h][j].substring(0, 1)== "b" || board[h][j].substring(0, 1)=="B"){
+							b++;
+						}
+					}
+				}
+			}
+			if(w == 0 || b == 0)
+				return true;
+			//no opportunity left to move for one player
+			w=0;
+			b=0;
+			for(int h=0; h<board.length;h++){
+				for(int j=0; j<board[0].length;j++){
+					String nb1=" ",nb2=" ",nw1=" ",nw2=" ",cb1=" ",cb2=" ",cw1=" ",cw2=" ";
+					for(int i=2; i>0;i--){
+						if(h+i <=6 && j+i <= 6){//right(1) down(b)
+							if(i==1)
+								nb1=board[h+i][j+i];
+							else
+								cb2=board[h+i][j+i];
+						}
+						if(h+i <=6 && j-i >= 0){//left down
+							if(i==1)
+								nb2=board[h+i][j-i];
+							else
+								cb2=board[h+i][j-i];
+						}
+						if(h-i >=0 && j+i <= 6){//right up
+							if(i==1)
+								nw1=board[h-i][j+i];
+							else
+								cw1=board[h-i][j+i];
+						}
+						if(h-i >=0 && j-i >= 0){//left up
+							if(i==1){
+								nw2=board[h-i][j-i];
+								//System.err.println("  nw2"+nw2+"*  ");
+							}else
+								cw2=board[h-i][j-i];
+						}
+					}
+					if(board[h][j] != null && board[h][j].substring(0, 1)== "w"){
+						if(nw1==null || nw2==null || (cw1==null && (nw1.substring(0, 1) == "b" || nw1.substring(0, 1) == "B")) || (cw2==null && (nw2.substring(0, 1) == "b" || nw2.substring(0, 1) == "B")))
+							w++;//System.out.println("x:"+j+" y:"+h+" w1: "+w+" nw1:"+nw1+" nw2:"+nw2);
+					}else if(board[h][j] != null && board[h][j].substring(0, 1)== "b"){
+						if(nb1==null || nb2==null || (cb1==null && (nb1.substring(0, 1) == "w" || nb1.substring(0, 1) == "W")) || (cb2==null && (nb2.substring(0, 1) == "w" || nb2.substring(0, 1) == "W")))
+							b++;//System.out.println("x:"+j+" y:"+h+" b1: "+b);
+					}else if(board[h][j] != null && board[h][j].substring(0, 1)== "W"){
+						if(nb1==null || nb2==null || (cb1==null && (nb1.substring(0, 1) == "w" || nb1.substring(0, 1) == "W")) || (cb2==null && (nb2.substring(0, 1) == "w" || nb2.substring(0, 1) == "W")))
+							w++;//System.out.println("x:"+j+" y:"+h+" w2: "+w);
+					}else if(board[h][j] != null && board[h][j].substring(0, 1)== "B"){
+						if(nw1==null || nw2==null || (cw1==null && (nw1.substring(0, 1) == "b" || nw1.substring(0, 1) == "B")) || (cw2==null && (nw2.substring(0, 1) == "b" || nw2.substring(0, 1) == "B")))
+							b++;//System.out.println("x:"+j+" y:"+h+" b2: "+b);
+					}
+				}
+			}
+			if(w == 0 || b == 0)
+				return true;
+			return false;
+		}
 
 }
