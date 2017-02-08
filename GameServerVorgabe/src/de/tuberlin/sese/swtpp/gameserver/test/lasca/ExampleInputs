@@ -1,0 +1,4 @@
+
+//startGame: String initialBoard, boolean whiteNext
+//assertMove: String move, boolean white, boolean expectedResultOfMove
+//assertGameState: String expectedBoard, boolean whiteNext, boolean finished, boolean whiteWon
