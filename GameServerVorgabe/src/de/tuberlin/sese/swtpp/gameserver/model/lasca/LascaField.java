@@ -38,7 +38,10 @@ public class LascaField implements Serializable {
 	//catch
 	public String doCatch(){
 		String stone = getFirst();
-		field = field.substring(1, field.length());
+		if(field.length()>1)
+			field = field.substring(1, field.length());
+		else
+			field = null;
 		return stone;
 	}
 	//getField
@@ -47,8 +50,15 @@ public class LascaField implements Serializable {
 	}
 	//getFirst
 	public String getFirst(){
+		System.out.println("field(in lascafield): "+field);
 		if(field != null)
 			return getField().substring(0, 1);
 		return null;
+	}
+	
+	
+	//isOfficer
+	public boolean isOfficer(){
+		return getFirst().equals("W") || getFirst().equals("B");
 	}
 }

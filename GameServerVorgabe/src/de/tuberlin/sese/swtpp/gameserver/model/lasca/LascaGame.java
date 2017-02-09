@@ -227,14 +227,15 @@ public class LascaGame extends Game implements Serializable{
 			LascaBoard lb = new LascaBoard(state);
 			LascaMove lm = new LascaMove(moveString, lb.getGameboard(), player, whitePlayer);
 			if(lm.rightPlayer() && lm.validMove()){
-				lm.toOfficer();
+				boolean isPromoted = lm.toOfficer();
 				state = lb.array2fen();
 				Move move = new Move(moveString, state, player);
 				history.add(move);
 				setHistory(history);
 				if(state!=lb.array2fen()){
-					if(false){//lm.schlagenMuss()){//TODO schlagenMuss
+					if(lm.mustCatch() && !isPromoted){//lm.schlagenMuss()){//TODO schlagenMuss
 						setState(state/*.concat(" ")+lm.getColour()*/);
+						setNextPlayer(player);
 						return true;
 					}
 					if(lm.getColour().equals("w")){
@@ -251,7 +252,7 @@ public class LascaGame extends Game implements Serializable{
 		}
 		if(isFinished())
 			finish(player);
-		System.err.println("Move not possible!");
+		System.err.println("Move not possible!(tryMove)");
 		return false;
 	}
 }

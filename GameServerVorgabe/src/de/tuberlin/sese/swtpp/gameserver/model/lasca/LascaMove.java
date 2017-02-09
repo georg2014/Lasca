@@ -94,26 +94,41 @@ public class LascaMove implements Serializable {
 	/*END************************************GETTER**********************************END*/
 	
 	/****************************************METHODES************************************/
-	public void toOfficer(){
+	public boolean toOfficer(){
+		boolean isPromoted=false;
 		if(colour=="w"){
 			try{
 				for(int i = 0; i<7;i++){
 					if(board[0][i].getField()!=null){
-						if(board[0][i].getFirst().equals("w"))
-							board[0][i].setFirst("W");}
+						if(board[0][i].getFirst().equals("w")){
+							board[0][i].setFirst("W");
+//							isPromoted = true;
+							return true;
+						}
+					}
 				}
-				
-			}catch(Exception exception){System.out.println("EXCEPTION in toOfficer w!");}
+			}catch(Exception exception){
+				System.out.println("EXCEPTION in toOfficer w!");
+//				isPromoted = false;
+			}
 		}
 		if(colour=="b"){
 			try{
 				for(int i = 0; i<7;i++){
 					if(board[6][i].getField()!=null){
-						if(board[6][i].getFirst().equals("b"))
-							board[6][i].setFirst("B");}
+						if(board[6][i].getFirst().equals("b")){
+							board[6][i].setFirst("B");
+//							isPromoted = true;
+							return true;
+						}
+					}
 				}
-			}catch(Exception exception){System.out.println("EXCEPTION in toOfficer b!");}
+			}catch(Exception exception){
+				System.out.println("EXCEPTION in toOfficer b!");
+//				isPromoted = false;
+			}
 		}
+		return isPromoted;
 	}
 	private void normalMove(){
 		getD().setField(getL().getField());
@@ -194,7 +209,7 @@ public class LascaMove implements Serializable {
 			return false;
 		}
 		//6,5.darf nach hinten? 
-		if(inReach()<0 && !((getL().getFirst() == "W") || (getL().getFirst() == "B"))){
+		if(inReach()<0 && !getL().isOfficer()){
 			System.err.println("move only possible for an officer(x)");
 			return false;
 		}
@@ -209,163 +224,114 @@ public class LascaMove implements Serializable {
 		return true;
 	}
 	public boolean rightPlayer(){
-		String bc;
-		if(colour == "w"){
-			bc = "W";
-		}else{
-			bc = "B";
-		}
-		return (getL().getFirst().equals(colour) || getL().getFirst().equals(bc));
+		return rightPlayer(getL().getFirst());
 	}
-	//TODO 2 schlagenMuss BIG
-	public boolean schlagenMuss(){
-		//editor: Jonas Franz Schicke
-		/**
-		 * @param board
-		 * @param colour String! - colour
-		 * @return boolean: true - es bleibt der colour an der reihe, da noch geschlagen werden kann/muss
-		 * 					 false - rest 
+	private boolean rightPlayer(String stone){
+		if(stone.equals(colour))
+			return true;
+		if(colour.equals("w") && stone.equals("W"))
+			return true;
+		if(colour.equals("b") && stone.equals("B"))
+			return true;
+		return false;
+	}
+	
+	public boolean 	mustCatch(){
+		//editor: Georg Stahn
+		/** mustCatch()
+		 * @return boolean:
+		 * 		true: if this player has to do another catchMove(not backwards) after a catchMove or instead of a normalMove this has to be done if it is possible
+		 * 		false: else
 		 */
-		if(colour.equals("w")){
-			for(int m=0;m<7;m++){
-				if(m%2==0){//jede zweite Reiche durchgehen
-					if(board[m][0]!=null){
-						String farbe = board[m][0].getFirst();//oberste farbe
-						try{
-							if(board[m-2][2]==null&&board[m-1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][1].getFirst()))return true;}//farbe und farbe des nächsten Feldes(rechts runter) sind nicht gleich
-						}catch(ArrayIndexOutOfBoundsException exception){
-	
-						}
-					};
-					if(board[m][2]!=null){
-						String farbe = board[m][2].getFirst();//oberste farbe
-						try{
-							if(board[m-2][4]==null&&board[m-1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][3].getFirst()))return true;}//farbe und farbe des nächsten Feldes(rechts runter) sind nicht gleich
-							if(board[m-2][0]==null&&board[m-1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
-	
-								if(!farbe.equalsIgnoreCase(board[m-1][1].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){
-							
-						}
-					};
-					if(board[m][4]!=null){
-						String farbe = board[m][4].getFirst();//oberste farbe
-						try{
-							if(board[m-2][6]==null&&board[m-1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][5].getFirst()))return true;}
-							if(board[m-2][2]==null&&board[m-1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][3].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-					if(board[m][6]!=null);
-				}
-				if(m==1||m==3||m==5){
-					if(board[m][1]!=null){
-						String farbe = board[m][1].getFirst();//oberste farbe
-						try{
-							if(board[m-2][3]==null&&board[m-1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][2].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-					if(board[m][3]!=null){
-						String farbe = board[m][3].getFirst();//oberste farbe
-						try{
-							if(board[m-2][5]==null&&board[m-1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][4].getFirst()))return true;}
-							if(board[m-2][1]==null&&board[m-1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][2].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-					if(board[m][5]!=null){
-						String farbe = board[m][5].getFirst();//oberste farbe
-						try{
-							if(board[m-2][3]==null&&board[m-1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m-1][4].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-				}
-			}
-
-		}
-
-			for(int m=0;m<7;m++){
-				if(m==0||m==2||m==4||m==6){//jede zweite Reiche durchgehen
-					if(board[m][0]!=null){
-						String farbe = board[m][0].getFirst();//oberste farbe
-						try{
-							if(board[m+2][2]==null&&board[m+1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][1].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){
-							
-						}
-					};
-					if(board[m][2]!=null){
-						String farbe = board[m][2].getFirst();//oberste farbe
-						try{
-							if(board[m+2][4]==null&&board[m+1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][3].getFirst()))return true;}
-							if(board[m+2][0]==null&&board[m+1][1]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][1].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){
-							
-						}
-					};
-					if(board[m][4]!=null){
-						String farbe = board[m][4].getFirst();//oberste farbe
-						try{
-							if(board[m+2][6]==null&&board[m+1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][5].getFirst()))return true;}
-							if(board[m+2][2]==null&&board[m+1][3]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][3].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-					if(board[m][6]!=null){
-						String farbe = board[m][6].getFirst();//oberste farbe
-						try{
-							if(board[m+2][4]==null&&board[m+1][5]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][5].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-				}
-				if(m==1||m==3||m==5){
-					if(board[m][1]!=null){
-						String farbe = board[m][1].getFirst();//oberste farbe
-						try{
-							if(board[m+2][3]==null&&board[m+1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][2].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-					if(board[m][3]!=null){
-						String farbe = board[m][3].getFirst();//oberste farbe
-						try{
-							if(board[m+2][5]==null&&board[m+1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][4].getFirst()))return true;}
-							if(board[m+2][1]==null&&board[m+1][2]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][2].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-					if(board[m][5]!=null){
-						String farbe = board[m][5].getFirst();//oberste farbe
-						try{
-							if(board[m+2][3]==null&&board[m+1][4]!=null){//auf rechtem Platz steht einer und übernächster ist null
-								if(!farbe.equalsIgnoreCase(board[m+1][4].getFirst()))return true;}
-						}catch(ArrayIndexOutOfBoundsException exception){						
-						}
-					};
-				}
-			}
-	return false;
+		if(mustCatchNormal() || mustCatchCatch())
+			return true;
+		return false;
 	}
+	
+		
+	private boolean mustCatchCatch() {
+		/** mustCatchCatch()
+		 * @return boolean
+		 * 		true: the tryed move is a catch Move
+		 * 				take destination and new board
+		 * 					look if any of the 2 or 4 catchMoves are possible
+		 * 						new destination free and valid
+		 * 							between field is the other colour
+		 * 		false: else
+		 */
+		if(Math.abs(inReach())==2){
+			LascaField[] possible = possibleMove(getD().isOfficer(), true);
+			LascaField[] between = possibleMove(getD().isOfficer(), false);
+			if(getXD()-getXL()==2){//TODO just for white right?
+				//moveString moves right
+				if(getD().isOfficer()){
+					possible[1]=null;
+				}else{
+					possible[3]=null;
+				}
+			}else{
+				if(getD().isOfficer()){
+					possible[0]=null;
+				}else{
+					possible[2]=null;
+				}
+			}
+			for(int i=0;i<possible.length;i++){
+				if(possible[i]!=null && possible[i].getField()==null && between[i]!=null && !rightPlayer(between[i].getFirst())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
+	private boolean mustCatchNormal() {
+		if(Math.abs(inReach())==1){//TODO her it needs to be tested for not only getD() rather then for all fields where the top stone is of the playing colour 
+			LascaField[] possible = possibleMove(getD().isOfficer(), false);
+			for(int i=0;i<possible.length;i++){
+				if(possible[i]!=null){//possible moves
+					if(possible[i].getField()==null){//new destination is free
+						return false;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	private LascaField[] possibleMove(boolean isOfficer,boolean isCatch){
+		int reach = 1; 
+		if(isCatch)
+			reach = 2;
+		boolean[] possible4={false,false,false,false};
+		LascaField[] fields = {null,null,null,null};
+		for(int i = 0; i<possible4.length;i++){
+			try{
+				if(isOfficer && colour.equals("b") || colour.equals("w")){
+					if(i==0)
+						fields[i] = board[getYD()-reach][getXD()+reach];
+					if(i==1)
+						fields[i] = board[getYD()-reach][getXD()-reach];
+				}
+				if(isOfficer && colour.equals("w") || colour.equals("b")){
+					if(i==2)
+						fields[i] = board[getYD()+reach][getXD()+reach];
+					if(i==3)
+						fields[i] = board[getYD()+reach][getXD()-reach];
+				}
+				possible4[i] = true;
+			}catch(ArrayIndexOutOfBoundsException exception){
+				fields[i] = null;
+//				System.err.println("in possibleMove "+i+" is not on board");
+			}
+		}
+		return fields;
+	}
+
+
+
 	
 
 	private int searchC(String coordinate){
@@ -423,5 +389,4 @@ public class LascaMove implements Serializable {
 		System.err.println("error: inReach (return 0)");
 		return 0;
 	}
-	
 }

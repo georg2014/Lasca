@@ -37,26 +37,19 @@ public class LascaBoard implements Serializable {
 			//System.err.println("state.length(): "+state.length());
 			String start = state.substring(0,1);
 			//System.err.println("start = state.substring(0,1) "+state.substring(0,1));
-			if((x%2 == 1)&&y==0)y++;
-			switch(start){
-			case "b": 	if(helpConstructor(x,y,"b"))
-							state = state.substring(1,state.length());
-						break;
-			case "B": 	if(helpConstructor(x,y,"B"))
-							state = state.substring(1,state.length());
-						break;
-			case "w": 	if(helpConstructor(x,y,"w"))
-							state = state.substring(1,state.length());
-						break;
-			case "W": 	if(helpConstructor(x,y,"W"))
-							state = state.substring(1,state.length());
-						break;
-			case ",": 	y=y+2;
-						state = state.substring(1,state.length());
-						break;
-			case "/": 	x++;
-						y=0;
-						state = state.substring(1,state.length());
+			if((x%2 == 1)&&y==0)
+				y++;
+			if(start.equals("b")||start.equals("w")||start.equals("B")||start.equals("W")){
+				if(helpConstructor(x,y,start)){
+					state = state.substring(1,state.length());
+				}
+			}else if(start.equals(",")){
+				y=y+2;
+				state = state.substring(1,state.length());
+			}else if(start.equals("/")){
+				x++;
+				y=0;
+				state = state.substring(1,state.length());
 			}
 		}
 	}
@@ -65,8 +58,7 @@ public class LascaBoard implements Serializable {
 	public boolean helpConstructor(int x, int y, String stone){
 		//editor: Georg Stahn
 		if(x<7){
-			if(gameboard[x][y].getField()==null) gameboard [x][y].addStone(stone);
-			else gameboard[x][y].addStone(stone);
+			gameboard[x][y].addStone(stone);
 			return true;
 		}
 		return false;
