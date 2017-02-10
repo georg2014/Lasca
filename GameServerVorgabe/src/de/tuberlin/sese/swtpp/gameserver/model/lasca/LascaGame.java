@@ -233,17 +233,17 @@ public class LascaGame extends Game implements Serializable{
 				history.add(move);
 				setHistory(history);
 				if(state!=lb.array2fen()){
-					if(lm.mustCatch() && !isPromoted){//lm.schlagenMuss()){//TODO schlagenMuss
-						setState(state/*.concat(" ")+lm.getColour()*/);
+					if(!isPromoted && lm.mustCatch()){
+						setState(state);
 						setNextPlayer(player);
 						return true;
 					}
 					if(lm.getColour().equals("w")){
-						setState(state/*.concat(" b")*/);
+						setState(state);
 						setNextPlayer(blackPlayer);
 						return true;
 					}else{
-						setState(state/*.concat(" w")*/);
+						setState(state);
 						setNextPlayer(whitePlayer);
 						return true;
 					}

@@ -10,7 +10,10 @@ public class LascaField implements Serializable {
 	
 	//constructor
 	public LascaField(String field){
-		this.field = field;
+		if(field == "")
+			this.field = null;
+		else
+			this.field = field;
 	}
 	
 	
@@ -20,6 +23,8 @@ public class LascaField implements Serializable {
 	}
 	//set
 	public void setField(String stones){
+		if(stones == "")
+			this.field = null;
 		this.field = (stones);
 	}
 	//addStone
@@ -31,7 +36,10 @@ public class LascaField implements Serializable {
 	}
 	//setFirst
 	public void setFirst(String stone){
-		setField(stone.concat(field.substring(1)));
+		if(field.length()<2)
+			setField(stone);
+		else
+			setField(stone.concat(field.substring(1)));
 	}
 	
 	
@@ -50,7 +58,7 @@ public class LascaField implements Serializable {
 	}
 	//getFirst
 	public String getFirst(){
-		System.out.println("field(in lascafield): "+field);
+//		System.out.println("field(in lascafield): "+field);
 		if(field != null)
 			return getField().substring(0, 1);
 		return null;

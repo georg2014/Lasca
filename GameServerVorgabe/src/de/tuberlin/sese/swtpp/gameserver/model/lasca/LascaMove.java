@@ -190,36 +190,36 @@ public class LascaMove implements Serializable {
 		 * @return boolean //wenn einfacher zug
 		 */
 		if(getL()==null){
-			System.err.println("location is empty");
+			System.err.println("(lm - validMove)location is empty");
 			return false;
 		}
 		//3.frei
 		if(getD().getField()!=null){
-			System.err.println("destination is not empty"+getD());
+			System.err.println("(lm - validMove)destination is not empty "+getD().getField());
 			return false;
 		}
 		//5.valides Feld(nicht von b1-b2)
 		if(!validFields()){
-			System.err.println("no valid field");
+			System.err.println("(lm - validMove)no valid field");
 			return false;
 		}
 		//6.inreichweite
 		if(inReach()==0){
-			System.err.println("destination not in reach");
+			System.err.println("(lm - validMove)destination not in reach");
 			return false;
 		}
 		//6,5.darf nach hinten? 
 		if(inReach()<0 && !getL().isOfficer()){
-			System.err.println("move only possible for an officer(x)");
+			System.err.println("(lm - validMove)move only possible for an officer(x)");
 			return false;
 		}
 		//7.schlagen!
 		if(Math.abs(inReach())==2){
-			System.out.println("catchMove will preform");
+			System.out.println("(lm - validMove)catchMove will preform");
 			catchMove();
 			return true;
 		}
-		System.out.println("normalMove will preform");
+		System.out.println("(lm - validMove)normalMove will preform");
 		normalMove();
 		return true;
 	}
@@ -277,7 +277,7 @@ public class LascaMove implements Serializable {
 				}
 			}
 			for(int i=0;i<possible.length;i++){
-				if(possible[i]!=null && possible[i].getField()==null && between[i]!=null && !rightPlayer(between[i].getFirst())){
+				if(possible[i]!=null && possible[i].getField()==null && between[i]!=null && between[i].getFirst()!=null && !rightPlayer(between[i].getFirst())){
 					return true;
 				}
 			}
