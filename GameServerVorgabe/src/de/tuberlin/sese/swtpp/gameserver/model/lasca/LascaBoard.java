@@ -104,7 +104,7 @@ public class LascaBoard implements Serializable {
 		return gameboard;
 	}
 	
-	//TODO isFinished BIG
+	//TODO !!! isFinished BIG
 	public  boolean isFinished(){
 		//editor: Georg Stahn
 		/**

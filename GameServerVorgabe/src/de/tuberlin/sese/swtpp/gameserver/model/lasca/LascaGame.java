@@ -228,11 +228,11 @@ public class LascaGame extends Game implements Serializable{
 			LascaMove lm = new LascaMove(moveString, lb.getGameboard(), player, whitePlayer);
 			if(lm.rightPlayer() && lm.validMove()){
 				boolean isPromoted = lm.toOfficer();
-				state = lb.array2fen();
 				Move move = new Move(moveString, state, player);
 				history.add(move);
 				setHistory(history);
-				if(state!=lb.array2fen()){
+				if(!state.equals(lb.array2fen())){
+					state = lb.array2fen();
 					if(!isPromoted && lm.mustCatch()){
 						setState(state);
 						setNextPlayer(player);

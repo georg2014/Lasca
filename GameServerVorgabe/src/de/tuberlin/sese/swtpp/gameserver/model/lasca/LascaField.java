@@ -67,6 +67,6 @@ public class LascaField implements Serializable {
 	
 	//isOfficer
 	public boolean isOfficer(){
-		return getFirst().equals("W") || getFirst().equals("B");
+		return "W".equals(getFirst()) || "B".equals(getFirst());
 	}
 }

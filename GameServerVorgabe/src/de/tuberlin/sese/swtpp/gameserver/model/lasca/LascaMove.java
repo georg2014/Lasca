@@ -147,7 +147,7 @@ public class LascaMove implements Serializable {
 		 * @return updated array
 		 */
 		String fieldEmpty = null;
-		if(getB().equals(fieldEmpty)){//is the between field free
+		if(getB().equals(fieldEmpty) || getB().getField() == fieldEmpty){//is the between field free
 			return;
 		}else if(getB().getField().charAt(0)=='w' || getB().getField().charAt(0)=='W'){
 			if(colour.equals("w")){
@@ -224,7 +224,10 @@ public class LascaMove implements Serializable {
 		return true;
 	}
 	public boolean rightPlayer(){
-		return rightPlayer(getL().getFirst());
+		String first = getL().getFirst();
+		if(first == null)
+			return false;
+		return rightPlayer(first);
 	}
 	private boolean rightPlayer(String stone){
 		if(stone.equals(colour))
@@ -262,7 +265,7 @@ public class LascaMove implements Serializable {
 		if(Math.abs(inReach())==2){
 			LascaField[] possible = possibleMove(getD().isOfficer(), true);
 			LascaField[] between = possibleMove(getD().isOfficer(), false);
-			if(getXD()-getXL()==2){//TODO just for white right?
+			if(getXD()-getXL()==2){//TODO !!! just for white right?
 				//moveString moves right
 				if(getD().isOfficer()){
 					possible[1]=null;
@@ -287,7 +290,7 @@ public class LascaMove implements Serializable {
 
 
 	private boolean mustCatchNormal() {
-		if(Math.abs(inReach())==1){//TODO her it needs to be tested for not only getD() rather then for all fields where the top stone is of the playing colour 
+		if(Math.abs(inReach())==1){//TODO !!! her it needs to be tested for not only getD() rather then for all fields where the top stone is of the playing colour 
 			LascaField[] possible = possibleMove(getD().isOfficer(), false);
 			for(int i=0;i<possible.length;i++){
 				if(possible[i]!=null){//possible moves
