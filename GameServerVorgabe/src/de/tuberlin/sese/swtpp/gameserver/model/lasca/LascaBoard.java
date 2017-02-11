@@ -100,4 +100,17 @@ public class LascaBoard implements Serializable {
 	public LascaField[][] getGameboard(){
 		return gameboard;
 	}
+	/**test**
+	if(	(getXD()-getXL()==2 && 	((getD().isOfficer() && "w".equals(colour) && i==1) ||
+								(!getD().isOfficer() && "w".equals(colour) && i==3)) ||
+		(getXD()-getXL()==2 && 	((getD().isOfficer() && "b".equals(colour) && i==3) ||
+								(!getD().isOfficer() && "b".equals(colour) && i==1)) ||
+		(getXD()-getXL()==-2 && 	((getD().isOfficer() && "w".equals(colour) && i==0) ||
+								(!getD().isOfficer() && "w".equals(colour) && i==2)) ||
+		(getXD()-getXL()==-2 && 	((getD().isOfficer() && "b".equals(colour) && i==2) ||
+								(!getD().isOfficer() && "b".equals(colour) && i==0))
+		){
+		return null;
+	}
+	**test**/
 }

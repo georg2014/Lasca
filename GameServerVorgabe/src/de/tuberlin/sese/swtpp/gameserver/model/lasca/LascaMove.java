@@ -99,8 +99,8 @@ public class LascaMove implements Serializable {
 		if(colour=="w"){
 			try{
 				for(int i = 0; i<7;i++){
-					if(board[0][i].getField()!=null && board[0][i].getFirst().equals("w")){
-						board[0][i].setFirst("W");
+					if(board[officerY(colour)][i].getField()!=null && board[officerY(colour)][i].getFirst().equals("w")){
+						board[officerY(colour)][i].setFirst("W");
 						return true;
 					}
 				}
@@ -108,20 +108,14 @@ public class LascaMove implements Serializable {
 				System.out.println("EXCEPTION in toOfficer w!");
 			}
 		}
-		if(colour=="b"){
-			try{
-				for(int i = 0; i<7;i++){
-					if(board[6][i].getField()!=null && board[6][i].getFirst().equals("b")){
-						board[6][i].setFirst("B");
-						return true;
-					}
-				}
-			}catch(Exception exception){
-				System.out.println("EXCEPTION in toOfficer b!");
-//				isPromoted = false;
-			}
-		}
 		return false;
+	}
+	private int officerY(String colour){
+		if("w".equals(colour))
+			return 0;
+		if("b".equals(colour))
+			return 6;
+		return -1;
 	}
 	private void normalMove(){
 		getD().setField(getL().getField());
@@ -254,32 +248,37 @@ public class LascaMove implements Serializable {
 		if(Math.abs(inReach())==2){
 			LascaField[] possible = possibleMovesOf(getYD() ,getXD() ,getD().isOfficer(), true);
 			LascaField[] between = possibleMovesOf(getYD() ,getXD() ,getD().isOfficer(), false);
-			if(getXD()-getXL()==2){
-				//moveString moves right
-				if(getD().isOfficer()){
-					if("w".equals(colour))
-						possible[1]=null;
-					else
-						possible[3]=null;
-				}else{
-					if("w".equals(colour))
-						possible[3]=null;
-					else
-						possible[1]=null;
-				}
-			}else{
-				if(getD().isOfficer()){
-					if("w".equals(colour))
-						possible[0]=null;
-					else
-						possible[2]=null;
-				}else{
-					if("w".equals(colour))
-						possible[2]=null;
-					else
-						possible[0]=null;
-				}
-			}
+//			if(getXD()-getXL()==2){
+//				//moveString moves right
+//				if(getD().isOfficer()){
+//					if("w".equals(colour))
+//						possible[1]=null;
+//					else
+//						possible[3]=null;
+//				}else{
+//					if("w".equals(colour))
+//						possible[3]=null;
+//					else
+//						possible[1]=null;
+//				}
+//			}else{
+//				if(getD().isOfficer()){
+//					if("w".equals(colour))
+//						possible[0]=null;
+//					else
+//						possible[2]=null;
+//				}else{
+//					if("w".equals(colour))
+//						possible[2]=null;
+//					else
+//						possible[0]=null;
+//				}
+//			}
+//			dont catch backwards
+			possible[0]=notBackwards(0, getXD(), getXL(), getD().isOfficer(), possible[0]);
+			possible[1]=notBackwards(1, getXD(), getXL(), getD().isOfficer(), possible[1]);
+			possible[2]=notBackwards(2, getXD(), getXL(), getD().isOfficer(), possible[2]);
+			possible[3]=notBackwards(3, getXD(), getXL(), getD().isOfficer(), possible[3]);
 			for(int i=0;i<possible.length;i++){
 				if(possible[i]!=null && possible[i].getField()==null && between[i]!=null && between[i].getFirst()!=null && !rightPlayer(between[i].getFirst())){
 					return true;
@@ -287,6 +286,19 @@ public class LascaMove implements Serializable {
 			}
 		}
 		return false;
+	}
+	//TODO BIG notBackwards
+	private LascaField notBackwards(int i, int xd, int xl, boolean officer, LascaField field) {
+		if(		(getXD()-getXL()==2 && 	((getD().isOfficer() && "w".equals(colour) && i==1) ||
+										(!getD().isOfficer() && "w".equals(colour) && i==3))) ||
+				(getXD()-getXL()==2 && 	((getD().isOfficer() && "b".equals(colour) && i==3) ||
+										(!getD().isOfficer() && "b".equals(colour) && i==1))) ||
+				(getXD()-getXL()==-2 && 	((getD().isOfficer() && "w".equals(colour) && i==0) ||
+										(!getD().isOfficer() && "w".equals(colour) && i==2))) ||
+				(getXD()-getXL()==-2 && 	((getD().isOfficer() && "b".equals(colour) && i==2) ||
+										(!getD().isOfficer() && "b".equals(colour) && i==0))))
+			return null;
+		return field;
 	}
 	private boolean mustCatchNormal() {
 		if(numberOfVM()>=10000)
@@ -365,9 +377,7 @@ public class LascaMove implements Serializable {
 	}
 	private boolean isPoMoOf(LascaField field, boolean isCatch){
 		LascaField[] fields = possibleMovesOf(getCoordinates(field)[1], getCoordinates(field)[0], field.isOfficer(), isCatch);
-		LascaField[] fieldsB = {null,null,null,null};//between
-		if(isCatch)
-			fieldsB = possibleMovesOf(getCoordinates(field)[1], getCoordinates(field)[0], field.isOfficer(), !isCatch);
+		LascaField[] fieldsB = possibleMovesOf(getCoordinates(field)[1], getCoordinates(field)[0], field.isOfficer(), !isCatch);
 		for(int i = 0;i<fields.length; i++){
 			if(isCatch && fields[i]!=null && fields[i].getField()==null && fieldsB[i]!=null && !rightPlayer(fieldsB[i].getFirst()))
 				return true;
@@ -415,16 +425,10 @@ public class LascaMove implements Serializable {
 		for(int i = 0; i<possible4.length;i++){
 			try{
 				if(isOfficer && colour.equals("b") || colour.equals("w")){
-					if(i==0)
-						fields[i] = board[y-reach][x+reach];
-					if(i==1)
-						fields[i] = board[y-reach][x-reach];
+					fields[i] = possibleMoveOf(x,y,reach,i);
 				}
 				if(isOfficer && colour.equals("w") || colour.equals("b")){
-					if(i==2)
-						fields[i] = board[y+reach][x+reach];
-					if(i==3)
-						fields[i] = board[y+reach][x-reach];
+					fields[i] = possibleMoveOf(x,y,reach,i);
 				}
 				possible4[i] = true;
 			}catch(ArrayIndexOutOfBoundsException exception){
@@ -433,6 +437,18 @@ public class LascaMove implements Serializable {
 			}
 		}
 		return fields;
+	}
+	private LascaField possibleMoveOf(int x, int y, int reach, int i){
+		if(i==0)
+			return board[y-reach][x+reach];
+		if(i==1)
+			return board[y-reach][x-reach];
+		if(i==2)
+			return board[y+reach][x+reach];
+		if(i==3)
+			return board[y+reach][x-reach];
+		System.err.println("notBackwards(lm)");
+		return null;
 	}
 	
 
