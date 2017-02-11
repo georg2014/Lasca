@@ -1,7 +1,6 @@
 package de.tuberlin.sese.swtpp.gameserver.model.lasca;
 
 import java.io.Serializable;
-import java.util.List;
 
 import de.tuberlin.sese.swtpp.gameserver.model.Game;
 import de.tuberlin.sese.swtpp.gameserver.model.Move;
@@ -25,7 +24,6 @@ public class LascaGame extends Game implements Serializable{
 	private Player whitePlayer;
 
 	// internal representation of the game state
-	// TODO: insert additional game data here
 	private String state = "b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w";
 	
 	/************************
@@ -223,35 +221,39 @@ public class LascaGame extends Game implements Serializable{
 			 * @param player The player that tries the move
 			 * @return true if the move was performed
 			 */
-		if(!isFinished()){
-			LascaBoard lb = new LascaBoard(state);
-			LascaMove lm = new LascaMove(moveString, lb.getGameboard(), player, whitePlayer);
-			if(lm.rightPlayer() && lm.validMove()){
-				boolean isPromoted = lm.toOfficer();
-				Move move = new Move(moveString, state, player);
-				history.add(move);
-				setHistory(history);
-				if(!state.equals(lb.array2fen())){
-					state = lb.array2fen();
-					if(!isPromoted && lm.mustCatch()){
-						setState(state);
-						setNextPlayer(player);
-						return true;
-					}
-					if(lm.getColour().equals("w")){
-						setState(state);
-						setNextPlayer(blackPlayer);
-						return true;
-					}else{
-						setState(state);
-						setNextPlayer(whitePlayer);
-						return true;
-					}
+		LascaBoard lb = new LascaBoard(state);
+		LascaMove lm = new LascaMove(moveString, lb.getGameboard(), player, whitePlayer);
+		if(lm.rightPlayer() && lm.validMove()){
+			boolean isPromoted = lm.toOfficer();
+			Move move = new Move(moveString, state, player);
+			history.add(move);
+			setHistory(history);
+			if(!state.equals(lb.array2fen())){
+				state = lb.array2fen();
+				if(lm.isFinished()){
+					finish(player);
+					System.out.println("\tisFinished: "+isFinished());
+					System.out.println("\t"+player.getName()+"(alice=white) "+player.isWinner());
+				}
+				if(!isPromoted && lm.mustCatch()){
+					setState(state);
+					setNextPlayer(player);
+					System.out.println("\ttryMove: true1");
+					return true;
+				}
+				if(lm.getColour().equals("w")){
+					setState(state);
+					setNextPlayer(blackPlayer);
+					System.out.println("\ttryMove: true2");
+					return true;
+				}else{
+					setState(state);
+					setNextPlayer(whitePlayer);
+					System.out.println("\ttryMove: true3");
+					return true;
 				}
 			}
 		}
-		if(isFinished())
-			finish(player);
 		System.err.println("Move not possible!(tryMove)");
 		return false;
 	}

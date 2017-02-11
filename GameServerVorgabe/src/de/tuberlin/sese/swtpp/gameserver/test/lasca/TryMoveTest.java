@@ -202,9 +202,9 @@ public class TryMoveTest {
 	@Test
 	public void testSchlagenMuss17(){
 		System.out.println("testSchlagenMuss17");
-		startGame(",,,/b,,/w,,,/,,/,,,/,,/,,,",true);
+		startGame(",,,b/b,,/w,,,/,,/,,,/,,/,,,",true);
 		assertMove("a5-c7",true,true);
-		assertGameState(",Wb,,/,,/,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState(",Wb,,b/,,/,,,/,,/,,,/,,/,,,",false,false,false);		
 	}
 	
 	@Test
@@ -216,9 +216,9 @@ public class TryMoveTest {
 	
 	@Test
 	public void testSchlagenMuss19(){
-		startGame(",,,/b,,/W,,,/,,/,,,/,,/,,,",true);
+		startGame(",,,b/b,,/W,,,/,,/,,,/,,/,,,",true);
 		assertMove("a5-c7",true,true);
-		assertGameState(",Wb,,/,,/,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState(",Wb,,b/,,/,,,/,,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss18(){
@@ -229,9 +229,9 @@ public class TryMoveTest {
 	}	
 	@Test
 	public void testSchlagenMuss20(){
-		startGame(",,,W/,,b/,,,/,,/,,,/,,/,,,",true);
+		startGame("b,,,W/,,b/,,,/,,/,,,/,,/,,,",true);
 		assertMove("g7-e5",true,true);
-		assertGameState(",,,/,,/,,Wb,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,Wb,/,,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss21(){
@@ -852,7 +852,7 @@ public class TryMoveTest {
 	public void testSchlagenMuss120(){
 		startGame(",,,/w,,/B,,,/,,/,,,/,,/,,,w",false);
 		assertMove("a5-c7",false,true);
-		assertGameState(",Bw,,/,,/,,,/,,/,,,/,,/,,,w",true,false,false);		
+		assertGameState(",Bw,,/,,/,,,/,,/,,,/,,/,,,w",true,false,false);
 	}
 	@Test
 	public void testSchlagenMuss121(){
@@ -874,8 +874,38 @@ public class TryMoveTest {
 	}
 	@Test
 	public void testSchlagenMuss124(){
-		startGame(",,,/,,/,,b,/,,B/,,,/,,/,,,",false);
+		startGame(",,,/,,/,,b,/,,B/,,,/,,/,,,w",false);
 		assertMove("f4-d6",false,false);
-		assertGameState(",,,/,,/,,b,/,,B/,,,/,,/,,,",false,false,false);		
+		assertGameState(",,,/,,/,,b,/,,B/,,,/,,/,,,w",false,false,false);		
+	}
+	@Test
+	public void testLagestEndMove(){
+		//http://www.lasca.org/show?6JS
+		startGame(",,,BBww/WB,WB,WB/,,,/WB,WB,WB/,,,/WB,WB,WB/,,,",false);
+		assertMove("g7-e5",false,true);
+		assertGameState(",,,/WB,WB,B/,,BBwwW,/WB,WB,WB/,,,/WB,WB,WB/,,,",false,false,false);
+		assertMove("e5-c7",false,true);
+		assertGameState(",BBwwWW,,/WB,B,B/,,,/WB,WB,WB/,,,/WB,WB,WB/,,,",false,false,false);
+		assertMove("c7-a5",false,true);
+		assertGameState(",,,/B,B,B/BBwwWWW,,,/WB,WB,WB/,,,/WB,WB,WB/,,,",false,false,false);
+		assertMove("a5-c3",false,true);
+		assertGameState(",,,/B,B,B/,,,/B,WB,WB/,BBwwWWWW,,/WB,WB,WB/,,,",false,false,false);
+		assertMove("c3-e5",false,true);
+		assertGameState(",,,/B,B,B/,,BBwwWWWWW,/B,B,WB/,,,/WB,WB,WB/,,,",false,false,false);
+		assertMove("e5-g3",false,true);
+		assertGameState(",,,/B,B,B/,,,/B,B,B/,,,BBwwWWWWWW/WB,WB,WB/,,,",false,false,false);
+		assertMove("g3-e1",false,true);
+		assertGameState(",,,/B,B,B/,,,/B,B,B/,,,/WB,WB,B/,,BBwwWWWWWWW,",false,false,false);
+		assertMove("e1-c3",false,true);
+		assertGameState(",,,/B,B,B/,,,/B,B,B/,BBwwWWWWWWWW,,/WB,B,B/,,,",false,false,false);
+		assertMove("c3-a1",false,true);
+		assertGameState(",,,/B,B,B/,,,/B,B,B/,,,/B,B,B/BBwwWWWWWWWWW,,,",true,true,false);
+	}
+	@Test
+	public void testEndMoveW(){
+		System.out.println("testEndMoveW");
+		startGame(",,,/W,W,W/,,,/W,W,W/,WWbbBBBBBBBB,,/BW,W,W/,,,",true);
+		assertMove("c3-a1",true,true);
+		assertGameState(",,,/W,W,W/,,,/W,W,W/,,,/W,W,W/WWbbBBBBBBBBB,,,",false,true,true);
 	}
 }
