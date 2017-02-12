@@ -175,7 +175,11 @@ public class LascaMove implements Serializable {
 		 * @return boolean //wenn einfacher zug
 		 */
 		if(getL()==null){
-			System.err.println("(lm - validMove)location is empty");
+			System.err.println("(lm - validMove)location is empty1");
+			return false;
+		}
+		if(getL().getField()==null){
+			System.err.println("(lm - validMove)location is empty2");
 			return false;
 		}
 		//3.frei
@@ -251,7 +255,7 @@ public class LascaMove implements Serializable {
 			for(int i=0;i<possible.length;i++){
 				if(possible[i]!=null
 						&& possible[i]!=getL() //TODO for normal move
-						&& possible[i].getField()==null 
+						&& possible[i].getField()==null
 						&& between[i]!=null
 						&& between[i].getFirst()!=null 
 						&& !rightPlayer(between[i].getFirst())){
@@ -336,6 +340,7 @@ public class LascaMove implements Serializable {
 				//officer
 		return result;
 	}
+	//is possible move of
 	private boolean isPoMoOf(LascaField field, boolean isCatch){
 		LascaField[] fields = possibleMovesOf(getCoordinates(field)[1], getCoordinates(field)[0], field.isOfficer(), isCatch);
 		LascaField[] fieldsB = possibleMovesOf(getCoordinates(field)[1], getCoordinates(field)[0], field.isOfficer(), !isCatch);

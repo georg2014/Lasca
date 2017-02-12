@@ -225,15 +225,16 @@ public class LascaGame extends Game implements Serializable{
 		LascaMove lm = new LascaMove(moveString, lb.getGameboard(), player, whitePlayer);
 		if(lm.rightPlayer() && lm.validMove()){
 			boolean isPromoted = lm.toOfficer();
-			Move move = new Move(moveString, state, player);
-			history.add(move);
-			setHistory(history);
 			if(!state.equals(lb.array2fen())){
+				Move move = new Move(moveString, state, player);
+				history.add(move);
+				setHistory(history);
 				state = lb.array2fen();
 				if(lm.isFinished()){
 					finish(player);
 					System.out.println("\tisFinished: "+isFinished());
 					System.out.println("\t"+player.getName()+"(alice=white) "+player.isWinner());
+					return true;
 				}
 				if(!isPromoted && lm.mustCatch()){
 					setState(state);
@@ -253,6 +254,20 @@ public class LascaGame extends Game implements Serializable{
 					return true;
 				}
 			}
+		}
+		//after jonas
+		if(lm.mustCatch() && lm.validMove()){
+			if(state.equals(lb.array2fen())){
+				return false;
+			}else{
+				if(!lm.mustCatch()){
+					//change player acording to colour
+				}else{
+					return true;
+				}
+			}
+		}else{
+			//normal move
 		}
 		System.err.println("Move not possible!(tryMove)");
 		return false;

@@ -159,6 +159,48 @@ public class TryMoveTest {
 
 		/**TEST*TRUE*NORMAL*MOVE**************************BEGIN**********************************TEST*TRUE*NORMAL*MOVE**/
 	/**
+	 * noMovePossible -> NumberOfVM
+	 */
+	@Test
+	public void noMovePossible01(){
+		startGame("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",false);
+		assertMove("a7-c5",false,false);
+		assertGameState("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",false,true,false);		
+	}
+	@Test
+	public void noMovePossible02(){
+		startGame("w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true);
+		assertMove("a7-c5",true,false);
+		assertGameState("w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true,true,false);		
+	}
+	@Test
+	public void noMovePossible03(){
+		startGame("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true);
+		assertMove("a7-c5",true,false);
+		assertGameState("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true,true,false);		
+	}
+	@Test
+	public void noMovePossible04(){
+		startGame("b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b",true);
+		assertMove("a7-c5",true,false);
+		assertGameState("b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b",true,true,false);		
+	}
+	/**
+	 * mustCatchCatch
+	 */
+	@Test
+	public void mustCatchCatch01(){
+		startGame("b,,,/w,,/,,,/w,,/,,,w/,,/,,,",false);
+		assertMove("a7-c5",false,true);
+		assertGameState(",,,/,,/,bw,,/w,,/,,,w/,,/,,,",false,false,false);		
+	}
+	@Test
+	public void mustCatchCatch02(){
+		startGame("b,,,/w,,/,,,/wb,,/,,,w/,,/,,,",false);
+		assertMove("a7-c5",false,true);
+		assertGameState(",,,/,,/,bw,,/wb,,/,,,w/,,/,,,",false,false,false);		
+	}
+	/**
 	 * normalMove
 	 */
 	@Test
