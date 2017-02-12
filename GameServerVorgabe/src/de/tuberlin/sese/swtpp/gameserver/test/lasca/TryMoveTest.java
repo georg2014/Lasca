@@ -65,38 +65,13 @@ public class TryMoveTest {
 	
 	@Test
 	public void exampleTest() {//normal move to the right w
+		System.out.println("***********************************************************");
 		startGame("b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w", true);
 		assertMove("a3-b4", true, true);
 		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/,w,w,w/w,w,w/w,w,w,w", false, false, false);
 	}
-/***TEST******************************************BEGIN****************************************************TEST****/
-	//TODO: implement test cases of same kind as example here
-//WHITE
-	//FINISH
-	//TRUE
-		//normale Move
-			//promotion
-		//catch Move
-			//promotion
-			//double catch Move
-				//promotion
-	//FALSE
-		//
-//BLACK
-	//FINISH
-	//TRUE
-			//normale Move
-				//promotion
-			//catch Move
-				//promotion
-				//double catch Move
-					//promotion
-	//FALSE
-		//
-/***TEST*******************************************END*****************************************************TEST***/
-/*W*TEST*******************************************BEGIN***************************************************TEST*W*/
-	//FINISH
-	/*W*TEST*TRUE**************************************BEGIN**********************************************TEST*TRUE*W*/
+
+
 		/*W*TEST*TRUE*NORMAL*MOVE**************************BEGIN**********************************TEST*TRUE*NORMAL*MOVE*W*/
 	@Test
 	public void testExample1() {//normal move to the left w
@@ -129,10 +104,36 @@ public class TryMoveTest {
 		assertGameState("b,b,Wbb,b/,,/,bw,b,b/,bw,/w,w,wb,/w,,w/w,,w,Bw", false, false, false);
 	}
 		/*W*TEST*TRUE*NORMAL*MOVE*PROMOTION****************END************************************TEST*TRUE*NORMAL*MOVE*W*/
-		/*W*TEST*TRUE*CATCH*MOVE***************************BEGIN*************************TEST*TRUE*CATCH*MOVE***********W*/
-		/*W*TEST*TRUE*CATCH*MOVE***************************END***************************TEST*TRUE*CATCH*MOVE***********W*/
-		/*W*TEST*TRUE*CATCH*MOVE*PROMOTION*****************BEGIN*************************TEST*TRUE*CATCH*MOVE*PROMOTION*W*/
-		/*W*TEST*TRUE*CATCH*MOVE*PROMOTION*****************END***************************TEST*TRUE*CATCH*MOVE*PROMOTION*W*/
+		/**TEST*TRUE*CATCH*MOVE***************************BEGIN*************************TEST*TRUE*CATCH*MOVE************/
+	/**
+	 * catchMove
+	 */
+	@Test
+	public void testCatchMove01(){
+		startGame("b,,,/w,,/,,,/,,/,,,/,,/,,,",false);
+		assertMove("a7-c5",false,true);
+		assertGameState(",,,/,,/,bw,,/,,/,,,/,,/,,,",true,false,false);		
+	}
+	@Test
+	public void testCatchMove02(){
+		startGame(",,,/,,/,,,/,,/,,,/b,,/w,,,",true);
+		assertMove("a1-c3",true,true);
+		assertGameState(",,,/,,/,,,/,,/,wb,,/,,/,,,",false,false,false);		
+	}
+	@Test
+	public void testCatchMove03(){
+		startGame(",,,/,,/,,,/,,/,,,/,,/w,,,",true);
+		assertMove("a1-c3",true,false);
+		assertGameState(",,,/,,/,,,/,,/,,,/,,/w,,,",true,false,false);		
+	}
+	@Test
+	public void testCatchMove04(){
+		startGame(",,,/,,/,,,/,,/,,,/w,,/w,,,",true);
+		assertMove("a1-c3",true,false);
+		assertGameState(",,,/,,/,,,/,,/,,,/w,,/w,,,",true,false,false);		
+	}
+		/**TEST*TRUE*CATCH*MOVE***************************END***************************TEST*TRUE*CATCH*MOVE************/
+
 		/*W*TEST*TRUE*DOUBLE*CATCH*MOVE***************************BEGIN***********TEST*TRUE*DOUBLE*CATCH*MOVE***********W*/
 	@Test
 	public void testExample30_0() {//30 catch move w 0
@@ -153,49 +154,102 @@ public class TryMoveTest {
 		assertGameState("b,b,Wbb,/b,,bb/,,bw,b/,,wb/,wb,w,w/ww,,w/,w,,w", false, false, false);
 	}
 		/*W*TEST*TRUE*DOUBLE*CATCH*MOVE***************************END*************TEST*TRUE*DOUBLE*CATCH*MOVE***********W*/
-		/*W*TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*****************BEGIN***********TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*W*/
-		/*W*TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*****************END*************TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*W*/
-	/*W*TEST*TRUE**************************************END************************************************TEST*TURE*W*/
-	/*W*TEST*FALSE**************************************BEGIN**********************************************TEST*TURE*W*/
-		/*W*TEST*FALSE**************************************BEGIN**********************************************TEST*FALSE*W*/
-		/*W*TEST*FALSE*NORMAL*MOVE**************************BEGIN**********************************TEST*FALSE*NORMAL*MOVE*W*/
-		/*W*TEST*FALSE*NORMAL*MOVE**************************END************************************TEST*FALSE*NORMAL*MOVE*W*/
-		/*W*TEST*FALSE*NORMAL*MOVE*PROMOTION****************BEGIN************************TEST*FALSE*NORMAL*MOVE*PROMOTION*W*/
-		/*W*TEST*FALSE*NORMAL*MOVE*PROMOTION****************END************************************TEST*FALSE*NORMAL*MOVE*W*/
-		/*W*TEST*FALSE*CATCH*MOVE***************************BEGIN*************************TEST*FALSE*CATCH*MOVE***********W*/
-		/*W*TEST*FALSE*CATCH*MOVE***************************END***************************TEST*FALSE*CATCH*MOVE***********W*/
-		/*W*TEST*FALSE*CATCH*MOVE*PROMOTION*****************BEGIN*************************TEST*FALSE*CATCH*MOVE*PROMOTION*W*/
-		/*W*TEST*FALSE*CATCH*MOVE*PROMOTION*****************END***************************TEST*FALSE*CATCH*MOVE*PROMOTION*W*/
-		/*W*TEST*FALSE**************************************END************************************************TEST*TURE*W*/
-/*W*TEST*******************************************END*****************************************************TEST*W*/
 	
-/*B*TEST*******************************************BEGIN***************************************************TEST*B*/
-	//FINISH
-	/*B*TEST*TRUE**************************************BEGIN**********************************************TEST*TRUE*B*/
-		/*B*TEST*TRUE*NORMAL*MOVE**************************BEGIN**********************************TEST*TRUE*NORMAL*MOVE*B*/
-		/*B*TEST*TRUE*NORMAL*MOVE**************************END************************************TEST*TRUE*NORMAL*MOVE*B*/
-		/*B*TEST*TRUE*NORMAL*MOVE*PROMOTION****************BEGIN************************TEST*TRUE*NORMAL*MOVE*PROMOTION*B*/
-		/*B*TEST*TRUE*NORMAL*MOVE*PROMOTION****************END************************************TEST*TRUE*NORMAL*MOVE*B*/
-		/*B*TEST*TRUE*CATCH*MOVE***************************BEGIN*************************TEST*TRUE*CATCH*MOVE***********B*/
-		/*B*TEST*TRUE*CATCH*MOVE***************************END***************************TEST*TRUE*CATCH*MOVE***********B*/
-		/*B*TEST*TRUE*CATCH*MOVE*PROMOTION*****************BEGIN*************************TEST*TRUE*CATCH*MOVE*PROMOTION*B*/
-		/*B*TEST*TRUE*CATCH*MOVE*PROMOTION*****************END***************************TEST*TRUE*CATCH*MOVE*PROMOTION*B*/
-		/*B*TEST*TRUE*DOUBLE*CATCH*MOVE***************************BEGIN***********TEST*TRUE*DOUBLE*CATCH*MOVE***********B*/
-		/*B*TEST*TRUE*DOUBLE*CATCH*MOVE***************************END*************TEST*TRUE*DOUBLE*CATCH*MOVE***********B*/
-		/*B*TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*****************BEGIN***********TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*B*/
-		/*B*TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*****************END*************TEST*TRUE*DOUBLE*CATCH*MOVE*PROMOTION*B*/
-	/*B*TEST*TRUE**************************************END************************************************TEST*TURE*B*/
-	/*B*TEST*FALSE**************************************BEGIN**********************************************TEST*FALSE*B*/
-		/*B*TEST*FALSE*NORMAL*MOVE**************************BEGIN**********************************TEST*FALSE*NORMAL*MOVE*B*/
-		/*B*TEST*FALSE*NORMAL*MOVE**************************END************************************TEST*FALSE*NORMAL*MOVE*B*/
-		/*B*TEST*FALSE*NORMAL*MOVE*PROMOTION****************BEGIN************************TEST*FALSE*NORMAL*MOVE*PROMOTION*B*/
-		/*B*TEST*FALSE*NORMAL*MOVE*PROMOTION****************END************************************TEST*FALSE*NORMAL*MOVE*B*/
-		/*B*TEST*FALSE*CATCH*MOVE***************************BEGIN*************************TEST*FALSE*CATCH*MOVE***********B*/
-		/*B*TEST*FALSE*CATCH*MOVE***************************END***************************TEST*FALSE*CATCH*MOVE***********B*/
-		/*B*TEST*FALSE*CATCH*MOVE*PROMOTION*****************BEGIN*************************TEST*FALSE*CATCH*MOVE*PROMOTION*B*/
-		/*B*TEST*FALSE*CATCH*MOVE*PROMOTION*****************END***************************TEST*FALSE*CATCH*MOVE*PROMOTION*B*/
-		/*B*TEST*FALSE**************************************END************************************************TEST*FALSE*B*/
-/*B*TEST*******************************************END*****************************************************TEST*B*/
+	
+
+		/**TEST*TRUE*NORMAL*MOVE**************************BEGIN**********************************TEST*TRUE*NORMAL*MOVE**/
+	/**
+	 * normalMove
+	 */
+	@Test
+	public void testNormalMove01(){
+		startGame(",,,/ww,wb,w/W,W,W,W/b,b,b/B,B,B,B/bB,wW,/,,,",true);
+		assertMove("a7-b6",true,false);
+		assertGameState(",,,/ww,wb,w/W,W,W,W/b,b,b/B,B,B,B/bB,wW,/,,,",true,false,false);		
+	}
+		/**TEST*TRUE*NORMAL*MOVE**************************END************************************TEST*TRUE*NORMAL*MOVE**/
+	
+	/**
+	 * toOfficer
+	 */
+		@Test
+		public void testToOfficer01(){
+			startGame("w,w,w,w/,,/,,,/,,/,,,/,,/,,,",true);
+			assertMove("b6-c5",true,false);
+			assertGameState("W,W,W,W/,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+		}
+		@Test
+		public void testToOfficer02(){
+			startGame("b,b,b,b/,,/,,,/,,/,,,/,,/,,,",true);
+			assertMove("b6-c5",true,false);
+			assertGameState("b,b,b,b/,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+		}
+		@Test
+		public void testToOfficer03(){
+			startGame(",,,/,,/,,,/,,/,,,/,,/,,,",true);
+			assertMove("b6-c5",true,false);
+			assertGameState(",,,/,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+		}
+		@Test
+		public void testToOfficer04(){
+			startGame(",,,/,,/,,,/,,/,,,/b,,/b,,b,b",false);
+			assertMove("b2-c1",false,true);
+			assertGameState(",,,/,,/,,,/,,/,,,/,,/B,B,B,B",true,false,false);		
+		}
+		@Test
+		public void testToOfficer05(){
+			startGame(",,,/,,/,,,/,,/,,,/b,,/w,w,w,w",false);
+			assertMove("b2-c1",false,false);
+			assertGameState(",,,/,,/,,,/,,/,,,/b,,/w,w,w,w",false,false,false);		
+		}
+		@Test
+		public void testToOfficer06(){
+			startGame(",,,/,,/,,,b/,,/,,,/,,/,,,",false);
+			assertMove("g5-f4",false,true);
+			assertGameState(",,,/,,/,,,/,,b/,,,/,,/,,,",true,false,false);		
+		}
+	/**
+	 * inReach
+	 */
+	@Test
+	public void testInReach01(){
+		startGame(",,,/,,/,,,/,,/,,,/w,,/,,,",true);
+		assertMove("b2-c3",true,true);
+		assertGameState(",,,/,,/,,,/,,/,w,,/,,/,,,",false,false,false);		
+	}
+	@Test
+	public void testInReach02(){
+		startGame("b,,,/,,/,,,/,,/,,,/,,/,,,",false);
+		assertMove("a7-b6",false,true);
+		assertGameState(",,,/b,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+	}
+	@Test
+	public void testInReach03(){
+		startGame(",,,/,,/,,,/,,/,,,/w,,/,,,",true);
+		assertMove("b2-d4",true,false);
+		assertGameState(",,,/,,/,,,/,,/,,,/w,,/,,,",true,false,false);		
+	}
+	@Test
+	public void testInReach04(){
+		startGame(",,,/,,/,,,/,,/,w,,/w,,/,,,",true);
+		assertMove("b2-c3",true,false);
+		assertGameState(",,,/,,/,,,/,,/,w,,/w,,/,,,",true,false,false);		
+	}
+	@Test
+	public void testInReach05(){
+		startGame(",,,/,,/,,,/,,/,w,,/w,,/,,,",false);
+		assertMove("b2-c3",false,false);
+		assertGameState(",,,/,,/,,,/,,/,w,,/w,,/,,,",false,false,false);		
+	}
+	/**
+	 * fenToArray
+	 */
+		@Test
+		public void testFenToArray01(){
+			startGame(",,,/w,w,w/W,W,W,W/b,b,b/B,B,B,B/bB,wW,/,,,",true);
+			assertMove("a7-b6",true,false);
+			assertGameState(",,,/w,w,w/W,W,W,W/b,b,b/B,B,B,B/bB,wW,/,,,",true,false,false);		
+		}
 	/**
 	 * SchlagenMussRauf mit w und W
 	 */

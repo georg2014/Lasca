@@ -248,57 +248,18 @@ public class LascaMove implements Serializable {
 		if(Math.abs(inReach())==2){
 			LascaField[] possible = possibleMovesOf(getYD() ,getXD() ,getD().isOfficer(), true);
 			LascaField[] between = possibleMovesOf(getYD() ,getXD() ,getD().isOfficer(), false);
-//			if(getXD()-getXL()==2){
-//				//moveString moves right
-//				if(getD().isOfficer()){
-//					if("w".equals(colour))
-//						possible[1]=null;
-//					else
-//						possible[3]=null;
-//				}else{
-//					if("w".equals(colour))
-//						possible[3]=null;
-//					else
-//						possible[1]=null;
-//				}
-//			}else{
-//				if(getD().isOfficer()){
-//					if("w".equals(colour))
-//						possible[0]=null;
-//					else
-//						possible[2]=null;
-//				}else{
-//					if("w".equals(colour))
-//						possible[2]=null;
-//					else
-//						possible[0]=null;
-//				}
-//			}
-//			dont catch backwards
-			possible[0]=notBackwards(0, getXD(), getXL(), getD().isOfficer(), possible[0]);
-			possible[1]=notBackwards(1, getXD(), getXL(), getD().isOfficer(), possible[1]);
-			possible[2]=notBackwards(2, getXD(), getXL(), getD().isOfficer(), possible[2]);
-			possible[3]=notBackwards(3, getXD(), getXL(), getD().isOfficer(), possible[3]);
 			for(int i=0;i<possible.length;i++){
-				if(possible[i]!=null && possible[i].getField()==null && between[i]!=null && between[i].getFirst()!=null && !rightPlayer(between[i].getFirst())){
+				if(possible[i]!=null
+						&& possible[i]!=getL() //TODO for normal move
+						&& possible[i].getField()==null 
+						&& between[i]!=null
+						&& between[i].getFirst()!=null 
+						&& !rightPlayer(between[i].getFirst())){
 					return true;
 				}
 			}
 		}
 		return false;
-	}
-	//TODO BIG notBackwards
-	private LascaField notBackwards(int i, int xd, int xl, boolean officer, LascaField field) {
-		if(		(getXD()-getXL()==2 && 	((getD().isOfficer() && "w".equals(colour) && i==1) ||
-										(!getD().isOfficer() && "w".equals(colour) && i==3))) ||
-				(getXD()-getXL()==2 && 	((getD().isOfficer() && "b".equals(colour) && i==3) ||
-										(!getD().isOfficer() && "b".equals(colour) && i==1))) ||
-				(getXD()-getXL()==-2 && 	((getD().isOfficer() && "w".equals(colour) && i==0) ||
-										(!getD().isOfficer() && "w".equals(colour) && i==2))) ||
-				(getXD()-getXL()==-2 && 	((getD().isOfficer() && "b".equals(colour) && i==2) ||
-										(!getD().isOfficer() && "b".equals(colour) && i==0))))
-			return null;
-		return field;
 	}
 	private boolean mustCatchNormal() {
 		if(numberOfVM()>=10000)
