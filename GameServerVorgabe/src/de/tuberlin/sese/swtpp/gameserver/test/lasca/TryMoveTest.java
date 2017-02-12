@@ -65,7 +65,6 @@ public class TryMoveTest {
 	
 	@Test
 	public void exampleTest() {//normal move to the right w
-		System.out.println("***********************************************************");
 		startGame("b,b,b,b/b,b,b/b,b,b,b/,,/w,w,w,w/w,w,w/w,w,w,w", true);
 		assertMove("a3-b4", true, true);
 		assertGameState("b,b,b,b/b,b,b/b,b,b,b/w,,/,w,w,w/w,w,w/w,w,w,w", false, false, false);
@@ -110,15 +109,15 @@ public class TryMoveTest {
 	 */
 	@Test
 	public void testCatchMove01(){
-		startGame("b,,,/w,,/,,,/,,/,,,/,,/,,,",false);
+		startGame("b,,,/w,,/,,,/,,/,,,/,,/,,w,",false);
 		assertMove("a7-c5",false,true);
-		assertGameState(",,,/,,/,bw,,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,bw,,/,,/,,,/,,/,,w,",true,false,false);		
 	}
 	@Test
 	public void testCatchMove02(){
-		startGame(",,,/,,/,,,/,,/,,,/b,,/w,,,",true);
+		startGame(",,b,/,,/,,,/,,/,,,/b,,/w,,,",true);
 		assertMove("a1-c3",true,true);
-		assertGameState(",,,/,,/,,,/,,/,wb,,/,,/,,,",false,false,false);		
+		assertGameState(",,b,/,,/,,,/,,/,wb,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testCatchMove03(){
@@ -161,29 +160,31 @@ public class TryMoveTest {
 	/**
 	 * noMovePossible -> NumberOfVM
 	 */
+	//TODO it is impossible to be black and to lose by yourself
+//	@Test
+//	public void noMovePossible01(){
+//		startGame("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",false);
+//		assertMove("a7-c5",false,false);
+//		assertGameState("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",false,true,false);		
+//	}
 	@Test
-	public void noMovePossible01(){
-		startGame("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",false);
-		assertMove("a7-c5",false,false);
-		assertGameState("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",false,true,false);		
+	public void winMove(){
+		startGame("W,W,W,W/w,w,w/w,w,w,w/w,w,w/w,w,w,w/,w,w/w,w,w,w",true);
+		assertMove("a1-b2",true,true);
+		assertGameState("W,W,W,W/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/,w,w,w",true,true,true);		
 	}
-	@Test
-	public void noMovePossible02(){
-		startGame("w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true);
-		assertMove("a7-c5",true,false);
-		assertGameState("w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true,true,false);		
-	}
+	//starteGame here is not possible so finished won't be checked
 	@Test
 	public void noMovePossible03(){
-		startGame("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true);
+		startGame("b,W,W,W/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true);
 		assertMove("a7-c5",true,false);
-		assertGameState("b,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true,true,false);		
+		assertGameState("b,W,W,W/w,w,w/w,w,w,w/w,w,w/w,w,w,w/w,w,w/w,w,w,w",true,false,false);		
 	}
 	@Test
 	public void noMovePossible04(){
 		startGame("b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b",true);
 		assertMove("a7-c5",true,false);
-		assertGameState("b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b",true,true,false);		
+		assertGameState("b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b/b,b,b/b,b,b,b",true,false,false);		
 	}
 	/**
 	 * mustCatchCatch
@@ -216,9 +217,9 @@ public class TryMoveTest {
 	 */
 		@Test
 		public void testToOfficer01(){
-			startGame("w,w,w,w/,,/,,,/,,/,,,/,,/,,,",true);
+			startGame("W,W,W,W/,,/,,,/,,/,,,/,,b/,,,",true);
 			assertMove("b6-c5",true,false);
-			assertGameState("W,W,W,W/,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+			assertGameState("W,W,W,W/,,/,,,/,,/,,,/,,b/,,,",true,false,false);		
 		}
 		@Test
 		public void testToOfficer02(){
@@ -234,9 +235,9 @@ public class TryMoveTest {
 		}
 		@Test
 		public void testToOfficer04(){
-			startGame(",,,/,,/,,,/,,/,,,/b,,/b,,b,b",false);
+			startGame(",,,w/,,/,,,/,,/,,,/b,,/B,,B,B",false);
 			assertMove("b2-c1",false,true);
-			assertGameState(",,,/,,/,,,/,,/,,,/,,/B,B,B,B",true,false,false);		
+			assertGameState(",,,w/,,/,,,/,,/,,,/,,/B,B,B,B",true,false,false);		
 		}
 		@Test
 		public void testToOfficer05(){
@@ -246,24 +247,24 @@ public class TryMoveTest {
 		}
 		@Test
 		public void testToOfficer06(){
-			startGame(",,,/,,/,,,b/,,/,,,/,,/,,,",false);
+			startGame(",,,/,,/,,,b/,,/,,,/,,/,,,w",false);
 			assertMove("g5-f4",false,true);
-			assertGameState(",,,/,,/,,,/,,b/,,,/,,/,,,",true,false,false);		
+			assertGameState(",,,/,,/,,,/,,b/,,,/,,/,,,w",true,false,false);		
 		}
 	/**
 	 * inReach
 	 */
 	@Test
 	public void testInReach01(){
-		startGame(",,,/,,/,,,/,,/,,,/w,,/,,,",true);
+		startGame("b,,,/,,/,,,/,,/,,,/w,,/,,,",true);
 		assertMove("b2-c3",true,true);
-		assertGameState(",,,/,,/,,,/,,/,w,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,/,w,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testInReach02(){
-		startGame("b,,,/,,/,,,/,,/,,,/,,/,,,",false);
+		startGame("b,,,/,,/,,,/,,/,,,/,,/,,,w",false);
 		assertMove("a7-b6",false,true);
-		assertGameState(",,,/b,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/b,,/,,,/,,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testInReach03(){
@@ -331,45 +332,45 @@ public class TryMoveTest {
 	}
 	@Test
 	public void testSchlagenMuss21(){
-		startGame(",,,/,,/,b,,/,w,/,,,/,,/,,,",true);
+		startGame("b,,,/,,/,b,,/,w,/,,,/,,/,,,w",true);
 		assertMove("d4-b6",true,true);
-		assertGameState(",,,/wb,,/,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/wb,,/,,,/,,/,,,/,,/,,,w",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss22(){
-		startGame(",,,/,,/,b,,/w,,/,,,/,,/,,,",true);
+		startGame("b,,,/,,/,b,,/w,,/,,,/,,/,,,",true);
 		assertMove("b4-d6",true,true);
-		assertGameState(",,,/,wb,/,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,wb,/,,,/,,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss23(){
-		startGame(",,,/,,/,,b,/,w,/,,,/,,/,,,",true);
+		startGame("b,,,/,,/,,b,/,w,/,,,/,,/,,,",true);
 		assertMove("d4-f6",true,true);
-		assertGameState(",,,/,,wb/,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,wb/,,,/,,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss24(){
-		startGame(",,,/,,/,,,/,,/,,b,/,,w/,,,",true);
+		startGame("b,,,/,,/,,,/,,/,,b,/,,w/,,,",true);
 		assertMove("f2-d4",true,true);
-		assertGameState(",,,/,,/,,,/,wb,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,wb,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss25(){
-		startGame(",,,/,,/,,,/b,,/,w,,/,,/,,,",true);
+		startGame("b,,,/,,/,,,/b,,/,w,,/,,/,,,",true);
 		assertMove("c3-a5",true,true);
-		assertGameState(",,,/,,/wb,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/wb,,,/,,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss26(){
-		startGame(",,,/,,/,,,/,b,/,w,,/,,/,,,",true);
+		startGame("b,,,/,,/,,,/,b,/,w,,/,,/,,,",true);
 		assertMove("c3-e5",true,true);
-		assertGameState(",,,/,,/,,wb,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,wb,/,,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss27(){
-		startGame("W,W,W,W/,,/,,,/,,b/,,w,/,,/,,,",true);
+		startGame("W,W,W,W/,,/,,,/,,b/,,w,/,,b/,,,",true);
 		assertMove("e3-g5",true,true);
-		assertGameState("W,W,W,W/,,/,,,wb/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("W,W,W,W/,,/,,,wb/,,/,,,/,,b/,,,",false,false,false);		
 	}
 
 	/**
@@ -377,63 +378,63 @@ public class TryMoveTest {
 	 */	
 	@Test
 	public void testSchlagenMuss28(){
-		startGame(",,,/,,/W,,,/b,,/,,,/,,/,,,",true);
+		startGame("b,,,/,,/W,,,/b,,/,,,/,,/,,,",true);
 		assertMove("a5-c3",true,true);
-		assertGameState(",,,/,,/,,,/,,/,Wb,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,/,Wb,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss29(){
-		startGame(",,,/,,/,,,/,,/,W,,/b,,/,,,",true);
+		startGame("b,,,/,,/,,,/,,/,W,,/b,,/,,,",true);
 		assertMove("c3-a1",true,true);
-		assertGameState(",,,/,,/,,,/,,/,,,/,,/Wb,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,/,,,/,,/Wb,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss30(){
-		startGame(",,,/,,/,,,/,,/,W,,/,b,/,,,",true);
+		startGame("b,,,/,,/,,,/,,/,W,,/,b,/,,,",true);
 		assertMove("c3-e1",true,true);
-		assertGameState(",,,/,,/,,,/,,/,,,/,,/,,Wb,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,/,,,/,,/,,Wb,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss31(){
-		startGame(",,,/,,/,,W,/,b,/,,,/,,/,,,",true);
+		startGame("b,,,/,,/,,W,/,b,/,,,/,,/,,,",true);
 		assertMove("e5-c3",true,true);
-		assertGameState(",,,/,,/,,,/,,/,Wb,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,/,Wb,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss32(){
-		startGame(",,,/W,,/,b,,/,,/,,,/,,/,,,",true);
+		startGame("b,,,/W,,/,b,,/,,/,,,/,,/,,,",true);
 		assertMove("b6-d4",true,true);
-		assertGameState(",,,/,,/,,,/,Wb,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,Wb,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss33(){
-		startGame(",,,/,W,/,b,,/,,/,,,/,,/,,,",true);
+		startGame("b,,,/,W,/,b,,/,,/,,,/,,/,,,",true);
 		assertMove("d6-b4",true,true);
-		assertGameState(",,,/,,/,,,/Wb,,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/Wb,,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss34(){
-		startGame(",,,/,W,/,,b,/,,/,,,/,,/,,,",true);
+		startGame("b,,,/,W,/,,b,/,,/,,,/,,/,,,",true);
 		assertMove("d6-f4",true,true);
-		assertGameState(",,,/,,/,,,/,,Wb/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,Wb/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss35(){
-		startGame(",,,/,,W/,,b,/,,/,,,/,,/,,,",true);
+		startGame("b,,,/,,W/,,b,/,,/,,,/,,/,,,",true);
 		assertMove("f6-d4",true,true);
-		assertGameState(",,,/,,/,,,/,Wb,/,,,/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,Wb,/,,,/,,/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss36(){
-		startGame(",,,/,W,/,,b,/,,/,,,/W,W,W/W,W,W,W",true);
+		startGame("b,,,/,W,/,,b,/,,/,,,/W,W,W/W,W,W,W",true);
 		assertMove("d6-f4",true,true);
-		assertGameState(",,,/,,/,,,/,,Wb/,,,/W,W,W/W,W,W,W",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,Wb/,,,/W,W,W/W,W,W,W",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss37(){
-		startGame(",,,/,,/,,W,/,,b/,,,/,,/,,,",true);
+		startGame("b,,,/,,/,,W,/,,b/,,,/,,/,,,",true);
 		assertMove("e5-g3",true,true);
-		assertGameState(",,,/,,/,,,/,,/,,,Wb/,,/,,,",false,false,false);		
+		assertGameState("b,,,/,,/,,,/,,/,,,Wb/,,/,,,",false,false,false);		
 	}
 
 	/**
@@ -441,116 +442,116 @@ public class TryMoveTest {
 	 */
 	@Test
 	public void testSchlagenMuss38(){
-		startGame(",,,/,,/b,,,/w,,/,,,/,,/,,,",false);
+		startGame(",,,/,,/b,,,/w,,/,,,/,,/,,,w",false);
 		assertMove("a5-c3",false,true);
-		assertGameState(",,,/,,/,,,/,,/,bw,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/,,/,bw,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss39(){
-		startGame(",,,/,,/,,,/,,/,b,,/w,,/,,,",false);
+		startGame(",,,/,,/,,,/,,/,B,,/w,,/,,,w",false);
 		assertMove("c3-a1",false,true);
-		assertGameState(",,,/,,/,,,/,,/,,,/,,/Bw,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/,,/,,,/,,/Bw,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss40(){
-		startGame(",,,/,,/,,,/,,/,b,,/,w,/,,,",false);
+		startGame(",,,/w,,/,,,/,,/,B,,/,w,/,,,",false);
 		assertMove("c3-e1",false,true);
-		assertGameState(",,,/,,/,,,/,,/,,,/,,/,,Bw,",true,false,false);		
+		assertGameState(",,,/w,,/,,,/,,/,,,/,,/,,Bw,",true,false,false);		
 	}	
 	@Test
 	public void testSchlagenMuss41(){
-		startGame(",,,/,,/,,b,/,w,/,,,/,,/,,,",false);
+		startGame(",,,/w,,/,,b,/,w,/,,,/,,/,,,",false);
 		assertMove("e5-c3",false,true);
-		assertGameState(",,,/,,/,,,/,,/,bw,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/w,,/,,,/,,/,bw,,/,,/,,,",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss42(){
-		startGame(",,,/b,,/,w,,/,,/,,,/,,/,,,",false);
+		startGame(",,,/b,,/,w,,/,,/,,,/,,/,,,w",false);
 		assertMove("b6-d4",false,true);
-		assertGameState(",,,/,,/,,,/,bw,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/,bw,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss43(){
-		startGame(",,,/,b,/,w,,/,,/,,,/,,/,,,",false);
+		startGame(",,,/,b,/,w,,/,,/,,,/,,/,,,w",false);
 		assertMove("d6-b4",false,true);
-		assertGameState(",,,/,,/,,,/bw,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/bw,,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss44(){
-		startGame(",,,/,b,/,,w,/,,/,,,/,,/,,,",false);
+		startGame(",,,/,b,/,,w,/,,/,,,/,,/,,,w",false);
 		assertMove("d6-f4",false,true);
-		assertGameState(",,,/,,/,,,/,,bw/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/,,bw/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss45(){
-		startGame(",,,/,,b/,,w,/,,/,,,/,,/,,,",false);
+		startGame(",,,/,,b/,,w,/,,/,,,/,,/,,,w",false);
 		assertMove("f6-d4",false,true);
-		assertGameState(",,,/,,/,,,/,bw,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/,bw,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss46(){
-		startGame(",,,/,b,/,,w,/,,/,,,/b,b,b/B,B,B,B",false);
+		startGame(",,,/w,b,/,,w,/,,/,,,/b,b,b/B,B,B,B",false);
 		assertMove("d6-f4",false,true);
-		assertGameState(",,,/,,/,,,/,,bw/,,,/b,b,b/B,B,B,B",true,false,false);		
+		assertGameState(",,,/w,,/,,,/,,bw/,,,/b,b,b/B,B,B,B",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss47(){
-		startGame(",,,/,,/,,b,/,,w/,,,/,,/,,,",false);
+		startGame(",,,/,,/,,b,/,,w/,,,/,,/,,,w",false);
 		assertMove("e5-g3",false,true);
-		assertGameState(",,,/,,/,,,/,,/,,,bw/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/,,/,,,bw/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss48(){
-		startGame(",,,/,,/,,,/,,/,,,b/,,w/,,,",false);
+		startGame(",,,/w,,/,,,/,,/,,,B/,,w/,,,",false);
 		assertMove("g3-e1",false,true);
-		assertGameState(",,,/,,/,,,/,,/,,,/,,/,,Bw,",true,false,false);		
+		assertGameState(",,,/w,,/,,,/,,/,,,/,,/,,Bw,",true,false,false);		
 	}
 	/**
 	 * SchlagenMussHoch mit B
 	 */
 	@Test
 	public void testSchlagenMuss50(){
-		startGame(",,,/,,/,w,,/,B,/,,,/,,/,,,",false);
+		startGame(",,,/,,/,w,,/,B,/,,,/,,/,,,w",false);
 		assertMove("d4-b6",false,true);
-		assertGameState(",,,/Bw,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/Bw,,/,,,/,,/,,,/,,/,,,w",true,false,false);		
 	}
 
 
 	@Test
 	public void testSchlagenMuss51(){
-		startGame(",,,/,,/,w,,/B,,/,,,/,,/,,,",false);
+		startGame(",,,/,,/,w,,/B,,/,,,/,,/,,,w",false);
 		assertMove("b4-d6",false,true);
-		assertGameState(",,,/,Bw,/,,,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,Bw,/,,,/,,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss52(){
-		startGame(",,,/,,/,,w,/,B,/,,,/,,/,,,",false);
+		startGame(",,,/,,/,,w,/,B,/,,,/,,/,,,w",false);
 		assertMove("d4-f6",false,true);
-		assertGameState(",,,/,,Bw/,,,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,Bw/,,,/,,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss53(){
-		startGame(",,,/,,/,,,/,,/,,w,/,,B/,,,",false);
+		startGame(",,,/,,/,,,/,,/,,w,/,,B/,,,w",false);
 		assertMove("f2-d4",false,true);
-		assertGameState(",,,/,,/,,,/,Bw,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,,/,Bw,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss54(){
-		startGame(",,,/,,/,,,/w,,/,B,,/,,/,,,",false);
+		startGame(",,,/,,/,,,/w,,/,B,,/,,/,,,w",false);
 		assertMove("c3-a5",false,true);
-		assertGameState(",,,/,,/Bw,,,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/Bw,,,/,,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss55(){
-		startGame(",,,/,,/,,,/,w,/,B,,/,,/,,,",false);
+		startGame(",,,/,,/,,,/,w,/,B,,/,,/,,,w",false);
 		assertMove("c3-e5",false,true);
-		assertGameState(",,,/,,/,,Bw,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",,,/,,/,,Bw,/,,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss56(){
-		startGame("B,B,B,B/,,/,,,/,,w/,,B,/,,/,,,",false);
+		startGame("B,B,B,B/,,/,,,/,,w/,,B,/,,/,,,w",false);
 		assertMove("e3-g5",false,true);
-		assertGameState("B,B,B,B/,,/,,,Bw/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState("B,B,B,B/,,/,,,Bw/,,/,,,/,,/,,,w",true,false,false);		
 	}
 
 	/**
@@ -571,9 +572,9 @@ public class TryMoveTest {
 	}
 	@Test
 	public void testSchlagenMuss59(){
-		startGame(",,,/,b,/,,w,/,,/,,,/,,/,,,",true);
+		startGame(",,,/,b,/,,w,/,,/,,,/b,,/,,,w",true);
 		assertMove("e5-c7",true,true);
-		assertGameState(",Wb,,/,,/,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState(",Wb,,/,,/,,,/,,/,,,/b,,/,,,w",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss60(){
@@ -589,9 +590,9 @@ public class TryMoveTest {
 	}
 	@Test
 	public void testSchlagenMuss62(){
-		startGame(",,,/,,b/,,,w/,,/,,,/,,/,,,",true);
+		startGame(",,,/,,b/,,,w/,,/,,,/,,b/,,,",true);
 		assertMove("g5-e7",true,true);
-		assertGameState(",,Wb,/,,/,,,/,,/,,,/,,/,,,",false,false,false);		
+		assertGameState(",,Wb,/,,/,,,/,,/,,,/,,b/,,,",false,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss63(){
@@ -886,9 +887,9 @@ public class TryMoveTest {
 	}
 	@Test
 	public void testSchlagenMuss110(){
-		startGame(",,,/,w,/,,B,/,,/,,,/,,/,,,",false);
+		startGame(",,,/,w,/,,B,/,,/,,,/,,/,,,w",false);
 		assertMove("e5-c7",false,true);
-		assertGameState(",Bw,,/,,/,,,/,,/,,,/,,/,,,",true,false,false);		
+		assertGameState(",Bw,,/,,/,,,/,,/,,,/,,/,,,w",true,false,false);		
 	}
 	@Test
 	public void testSchlagenMuss111(){
@@ -995,13 +996,30 @@ public class TryMoveTest {
 		assertMove("e1-c3",false,true);
 		assertGameState(",,,/B,B,B/,,,/B,B,B/,BBwwWWWWWWWW,,/WB,B,B/,,,",false,false,false);
 		assertMove("c3-a1",false,true);
-		assertGameState(",,,/B,B,B/,,,/B,B,B/,,,/B,B,B/BBwwWWWWWWWWW,,,",true,true,false);
+		assertGameState(",,,/B,B,B/,,,/B,B,B/,,,/B,B,B/BBwwWWWWWWWWW,,,",false,true,false);
 	}
 	@Test
 	public void testEndMoveW(){
 		System.out.println("testEndMoveW");
 		startGame(",,,/W,W,W/,,,/W,W,W/,WWbbBBBBBBBB,,/BW,W,W/,,,",true);
 		assertMove("c3-a1",true,true);
-		assertGameState(",,,/W,W,W/,,,/W,W,W/,,,/W,W,W/WWbbBBBBBBBBB,,,",false,true,true);
+		assertGameState(",,,/W,W,W/,,,/W,W,W/,,,/W,W,W/WWbbBBBBBBBBB,,,",true,true,true);
 	}
+	@Test
+	public void testMustCatchNormal(){//TODO needs to be debugged
+		startGame("b,,,/,,/,,,/,,/,,,/,,b/w,,,w",true);
+		assertMove("a1-b2",true,false);
+		assertGameState("b,,,/,,/,,,/,,/,,,/,,b/w,,,w",true,false,false);
+	}
+	@Test
+	public void testValidMove(){
+		startGame("b,,,/,,/,,,/,,/,,,/,,/w,,,w",true);
+		assertMove("a1-a2",true,false);
+		assertGameState("b,,,/,,/,,,/,,/,,,/,,/w,,,w",true,false,false);
+	}
+//	public void testInReach(){
+//		startGame("a,,,/,,b/,,,/,,/,,,/,,/w,,,w",true);
+//		assertMove("a1-a2",true,false);
+//		assertGameState("a,,,/,,b/,,,/,,/,,,/,,/w,,,w",true,false,false);
+//	}
 }

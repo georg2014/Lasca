@@ -27,7 +27,6 @@ public class LascaBoard implements Serializable {
 	
 	//constructor
 	
-	//TODO BIG fen2array
 	public LascaBoard(String state){
 		//editor: Jonas Franz Schicke, Georg Stahn
 		int x=0;

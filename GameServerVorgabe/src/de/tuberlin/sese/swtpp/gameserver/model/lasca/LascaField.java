@@ -10,9 +10,9 @@ public class LascaField implements Serializable {
 	
 	//constructor
 	public LascaField(String field){
-		if(field == "")
-			this.field = null;
-		else
+//		if(field == "")
+//			this.field = null;
+//		else
 			this.field = field;
 	}
 	
@@ -23,8 +23,8 @@ public class LascaField implements Serializable {
 	}
 	//set
 	public void setField(String stones){
-		if(stones == "")
-			this.field = null;
+//		if(stones == "")
+//			this.field = null;
 		this.field = (stones);
 	}
 	//addStone

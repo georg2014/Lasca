@@ -255,20 +255,20 @@ public class LascaGame extends Game implements Serializable{
 				}
 			}
 		}
-		//after jonas
-		if(lm.mustCatch() && lm.validMove()){
-			if(state.equals(lb.array2fen())){
-				return false;
-			}else{
-				if(!lm.mustCatch()){
-					//change player acording to colour
-				}else{
-					return true;
-				}
-			}
-		}else{
-			//normal move
-		}
+//		//after jonas
+//		if(lm.mustCatch() && lm.validMove()){
+//			if(state.equals(lb.array2fen())){
+//				return false;
+//			}else{
+//				if(!lm.mustCatch()){
+//					//change player acording to colour
+//				}else{
+//					return true;
+//				}
+//			}
+//		}else{
+//			//normal move
+//		}
 		System.err.println("Move not possible!(tryMove)");
 		return false;
 	}
