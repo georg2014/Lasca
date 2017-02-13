@@ -236,7 +236,7 @@ public class LascaGame extends Game implements Serializable{
 					System.out.println("\t"+player.getName()+"(alice=white) "+player.isWinner());
 					return true;
 				}
-				if(!isPromoted && lm.mustCatch()){
+				if(!isPromoted && lm.mustCatchCatch()){
 					setState(state);
 					setNextPlayer(player);
 					System.out.println("\ttryMove: true1");

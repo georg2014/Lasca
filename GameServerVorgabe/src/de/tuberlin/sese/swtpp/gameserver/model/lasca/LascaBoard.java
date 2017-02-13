@@ -39,13 +39,13 @@ public class LascaBoard implements Serializable {
 //			if((x%2 == 1)&&y==0)
 //				y++;
 			y = helpConstructor(x, y);
-			if((start.equals("b")||start.equals("w")||start.equals("B")||start.equals("W")) && x<7){
+			if(("b".compareTo(start)==0||"w".compareTo(start)==0||"B".compareTo(start)==0||"W".compareTo(start)==0)/* && x<7*/){
 				gameboard[x][y].addStone(start);
 				state = state.substring(1,state.length());
-			}else if(start.equals(",")){
+			}else if(",".compareTo(start)==0){
 				y=y+2;
 				state = state.substring(1,state.length());
-			}else if(start.equals("/")){
+			}else/* if(start.compareTo("/")==0)*/{
 				x++;
 				y=0;
 				state = state.substring(1,state.length());

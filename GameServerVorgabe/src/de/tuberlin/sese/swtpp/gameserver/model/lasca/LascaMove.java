@@ -123,7 +123,7 @@ public class LascaMove implements Serializable {
 		getD().setField(getL().getField());
 		getL().delete();
 	}
-	private  void catchMove(){
+	private void catchMove(){
 		//edtor:Georg Stahn
 		/**
 		 * @param 2d array
@@ -134,7 +134,7 @@ public class LascaMove implements Serializable {
 		 * @return updated array
 		 */
 		String fieldEmpty = null;
-		if(getB().equals(fieldEmpty) || getB().getField() == fieldEmpty){//is the between field free
+		if(/*getB().equals(fieldEmpty) ||*/ getB().getField() == fieldEmpty){//is the between field free
 			return;
 		}else if(getB().getField().charAt(0)=='w' || getB().getField().charAt(0)=='W'){
 			if(colour.equals("w")){
@@ -156,7 +156,7 @@ public class LascaMove implements Serializable {
 		return valid(getXL(), getYL()) && valid(getXD(), getYD());
 	}
 	public boolean valid(int x, int y){
-		if((x%2 + y%2)!=1 && 0<=x && x<=6 && 0<=y && y<=6)
+		if((x%2 + y%2)!=1 /*&& 0<=x && x<=6 && 0<=y && y<=6*/)
 			return true;
 		return false;
 	}
@@ -195,10 +195,10 @@ public class LascaMove implements Serializable {
 			return false;
 		}
 		//6.inreichweite
-//		if(inReach()==0){
-//			System.err.println("(lm - validMove)destination not in reach");
-//			return false;
-//		}
+		if(inReach()==0){
+			System.err.println("(lm - validMove)destination not in reach");
+			return false;
+		}
 //		//6,5.darf nach hinten? 
 //		if(inReach()<0 && !getL().isOfficer()){
 //			System.err.println("(lm - validMove)move only possible for an officer(x)");
@@ -209,6 +209,10 @@ public class LascaMove implements Serializable {
 			System.out.println("(lm - validMove)catchMove will preform");
 			catchMove();
 			return true;
+		}
+		if(mustCatchNormal()){
+			System.out.println("(lm - validMove)it is possible to do a catch move");
+			return false;
 		}
 		System.out.println("(lm - validMove)normalMove will preform");
 		normalMove();
@@ -230,18 +234,18 @@ public class LascaMove implements Serializable {
 		return false;
 	}
 	
-	public boolean 	mustCatch(){
-		//editor: Georg Stahn
-		/** mustCatch()
-		 * @return boolean:
-		 * 		true: if this player has to do another catchMove(not backwards) after a catchMove or instead of a normalMove this has to be done if it is possible
-		 * 		false: else
-		 */
-		if(mustCatchNormal() || mustCatchCatch())
-			return true;
-		return false;
-	}
-	private boolean mustCatchCatch() {
+//	public boolean 	mustCatch(){
+//		//editor: Georg Stahn
+//		/** mustCatch()
+//		 * @return boolean:
+//		 * 		true: if this player has to do another catchMove(not backwards) after a catchMove or instead of a normalMove this has to be done if it is possible
+//		 * 		false: else
+//		 */
+//		if(mustCatchNormal() || mustCatchCatch())
+//			return true;
+//		return false;
+//	}
+	public boolean mustCatchCatch() {
 		/** mustCatchCatch()
 		 * @return boolean
 		 * 		true: the tryed move is a catch Move
@@ -353,7 +357,7 @@ public class LascaMove implements Serializable {
 			if(isCatch 
 					&& fields[i]!=null 
 					&& fields[i].getField()==null 
-					&& fieldsB[i]!=null 
+//					&& fieldsB[i]!=null 
 					&& !rightPlayer(fieldsB[i].getFirst()))
 				return true;
 			if(!isCatch && fields[i]!=null && fields[i].getField()==null)
@@ -364,7 +368,7 @@ public class LascaMove implements Serializable {
 
 
 	private int[] getCoordinates(LascaField field){
-		for(int y=0; y<board.length;y++){
+		for(int y=0; y<board.length-1;y++){
 			for(int x=0; x<board[0].length;x++){
 				if(board[y][x] == field){
 					int[] coordinates = {x,y};
@@ -372,8 +376,8 @@ public class LascaMove implements Serializable {
 				}
 			}
 		}
-		System.err.println("(lm - getCoor.) cannot find field");
-		int[] coordinates = new int[2];
+		System.err.println("(lm - getCoor.) last");
+		int[] coordinates = {6,6};
 		return coordinates;
 	}
 
@@ -384,7 +388,7 @@ public class LascaMove implements Serializable {
 		LinkedList<LascaField> allFields = new  LinkedList<LascaField>();
 		for(int y=0; y<board.length;y++){
 			for(int x=0; x<board[0].length;x++){
-				if(board[y][x] != null && !rightPlayer(colour)){
+				if(board[y][x] != null && board[y][x].stoneWith(colour)){
 					allFields.add(board[y][x]);
 				}
 			}
@@ -435,14 +439,14 @@ public class LascaMove implements Serializable {
 		 * 		fail : -1
 		 * 		else : coordinate
 		 */
-		if(coordinate.length()==1){
+//		if(coordinate.length()==1){
 			int c = java.lang.Character.getNumericValue(coordinate.charAt(0));
 			if(c<10)
 				return 7-c;//numbers stay numbers
 			else
 				return c-10;//little letters begin after 9
-		}
-		return -1;
+//		}
+//		return -1;
 	}
 	public int inReach(){
 		//editor: Georg Stahn
@@ -470,7 +474,7 @@ public class LascaMove implements Serializable {
 //						System.out.println("inReach: -"+i);
 						return i;
 					}
-				}else if(colour.equals("b")){
+				}else/* if(colour.equals("b"))*/{
 					if((this.getYD()-this.getYL())==-i){
 						return -i;
 					}else{

@@ -69,4 +69,14 @@ public class LascaField implements Serializable {
 	public boolean isOfficer(){
 		return "W".equals(getFirst()) || "B".equals(getFirst());
 	}
+	public boolean stoneWith(String colour){
+		if("w".equals(colour)){
+			if("w".equals(getFirst())||"W".equals(getFirst()))
+				return true;
+		}else{
+			if("b".equals(getFirst())||"B".equals(getFirst()))
+				return true;
+		}
+		return false;
+	}
 }
