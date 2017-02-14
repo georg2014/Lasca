@@ -126,8 +126,6 @@ public class LascaMove implements Serializable {
 	private void catchMove(){
 		//edtor:Georg Stahn
 		/**
-		 * @param 2d array
-		 * @param moveString (a1-c3)
 		 * @param colour "w":white, "b":black of the playing player
 		 * 		between the location and the destination is a field where a chip of the other colour lays 
 		 * 			-calls catchMust (takes that catched chip with him)
@@ -399,17 +397,23 @@ public class LascaMove implements Serializable {
 		int reach = 1; 
 		if(isCatch)
 			reach = 2;
-		boolean[] possible4={false,false,false,false};
+//		boolean[] possible4={false,false,false,false};
 		LascaField[] fields = {null,null,null,null};
-		for(int i = 0; i<possible4.length;i++){
+		for(int i = 0; i<fields.length;i++){
 			try{
-				if(isOfficer && colour.equals("b") || colour.equals("w")){
-					fields[i] = possibleMoveOf(x,y,reach,i);
+				fields[i] = possibleMoveOf(x,y,reach,i);
+				if("w".equals(fields[i].getFirst()) && i%2==1){
+					fields[i] = null;
+				}else if("b".equals(fields[i].getFirst()) && i%2==0){
+					fields[i] = null;
 				}
-				if(isOfficer && colour.equals("w") || colour.equals("b")){
-					fields[i] = possibleMoveOf(x,y,reach,i);
-				}
-				possible4[i] = true;
+//				if(isOfficer && colour.equals("B") || colour.equals("w")){
+//					fields[i] = possibleMoveOf(x,y,reach,i);
+//				}
+//				if(isOfficer && colour.equals("w") || colour.equals("b")){
+//					fields[i] = possibleMoveOf(x,y,reach,i);
+//				}
+//				possible4[i] = true;
 			}catch(ArrayIndexOutOfBoundsException exception){
 				fields[i] = null;
 //				System.err.println("in possibleMove "+i+" is not on board");
@@ -421,11 +425,11 @@ public class LascaMove implements Serializable {
 		if(i==0)
 			return board[y-reach][x+reach];
 		if(i==1)
-			return board[y-reach][x-reach];
-		if(i==2)
-			return board[y+reach][x+reach];
-//		if(i==3)
 			return board[y+reach][x-reach];
+		if(i==2)
+			return board[y-reach][x-reach];
+//		if(i==3)
+			return board[y+reach][x+reach];
 //		System.err.println("notBackwards(lm)");
 //		return null;
 	}

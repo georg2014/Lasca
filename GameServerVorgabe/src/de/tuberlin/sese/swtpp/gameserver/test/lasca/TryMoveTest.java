@@ -190,7 +190,7 @@ public class TryMoveTest {
 		System.out.println("**************************************************************************");
 		startGame("W,W,W,W/w,w,w/b,b,b,b/,,/w,b,,/,,/,,,",false);
 		assertMove("c3-b4",false,true);
-		assertGameState("W,W,W,W/w,w,w/b,b,b,b/b,,/w,,,/,,/,,,",false,true,true);
+		assertGameState("W,W,W,W/w,w,w/b,b,b,b/b,,/w,,,/,,/,,,",false,true,false);
 	}
 	/**
 	 * mustCatchCatch
