@@ -154,4 +154,10 @@ blackMoveRightUp currentBoard currentPosition counter
 				else if (snd currentPosition - counter) == "B" then []
 					else if (snd currentPosition - counter) == "w" then []
 						else if (snd currentPosition - counter) == "W" then []
-							else (remove last currentPosition - counter) ++ snd currentPosition	
+							else (remove last currentPosition - counter) ++ snd currentPosition
+							
+changeStones :: [(String)] -> String -> [(String)]
+changeStones x y = [makeToTuple (head (head x)) y]
+
+makeToTuple :: String -> String -> (String)
+makeToTuple x y = (x,y)
