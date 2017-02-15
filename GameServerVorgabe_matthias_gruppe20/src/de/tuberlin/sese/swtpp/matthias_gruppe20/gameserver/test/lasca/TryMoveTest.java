@@ -1083,21 +1083,10 @@ public class TryMoveTest {
 		assertMove("e5-d4",false,false);
 		assertGameState("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false,false,false);
 	}
-	//
-//	@Test
-//	public void testMustCatchNormal2(){
-//		startGame("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false);
-//		assertMove("e5-d4",false,false);
-//		assertGameState("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false,false,false);
-//	}@Test
-//	public void testMustCatchNormal2(){
-//		startGame("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false);
-//		assertMove("e5-d4",false,false);
-//		assertGameState("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false,false,false);
-//	}@Test
-//	public void testMustCatchNormal2(){
-//		startGame("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false);
-//		assertMove("e5-d4",false,false);
-//		assertGameState("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false,false,false);
-//	}
+	@Test
+	public void testInReachNot69(){
+		startGame("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false);
+		assertMove("a1-g1",false,false);
+		assertGameState("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false,false,false);
+	}
 }

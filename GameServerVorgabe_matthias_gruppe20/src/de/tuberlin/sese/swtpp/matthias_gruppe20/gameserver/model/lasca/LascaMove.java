@@ -148,7 +148,7 @@ public class LascaMove implements Serializable {
 	
 	
 	public boolean validFields(){//of the Move
-		return valid(getXL(), getYL()) && valid(getXD(), getYD());
+		return /*valid(getXL(), getYL()) && */valid(getXD(), getYD());
 	}
 	public boolean valid(int x, int y){
 		if((x%2 + y%2)!=1 /*&& 0<=x && x<=6 && 0<=y && y<=6*/)
@@ -426,7 +426,7 @@ public class LascaMove implements Serializable {
 		 * 			-2 for 2.backwards
 		 */
 		for(int i=1; i<=2; i++){
-			if(Math.abs(this.getXL()-this.getXD())==i && Math.abs(this.getYL()-this.getYD())==i){
+			if(Math.abs(this.getXL()-this.getXD())==i & Math.abs(this.getYL()-this.getYD())==i){
 				if(colour.equals("w")){
 					if((this.getYD()-this.getYL())==i){
 						return -i;
