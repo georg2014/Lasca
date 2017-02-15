@@ -184,8 +184,8 @@ blackSolToOff if "a1" `elem` currentPosition == true then ((remove last currentP
 
 checkPossibleMoves b = if "w" `elem` (last (splitInput x)) then	
 							
-changeStones :: [(String)] -> String -> [(String)]
+changeStones :: [(String,String)] -> String -> [(String,String)]
 changeStones x y = [makeToTuple (head (head x)) y]
 
-makeToTuple :: String -> String -> (String)
+makeToTuple :: String -> String -> (String,String)
 makeToTuple x y = (x,y)
