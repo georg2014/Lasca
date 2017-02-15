@@ -117,3 +117,41 @@ board = ["a7","c7","e7","g7","b6","d6","f6","a5","c5","e5","g5","b4","d4","f4","
 -- merged das board und den aktuellen spielstand, man weiß jetzt genau welcher stein auf welchem punkt ist.
 pieceToBoard x y = zip x y
     
+--Spielregeln--
+
+--Counter muss 4 sein
+whiteMoveLeftUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
+whiteMoveLeftUp currentBoard currentPosition counter 
+			if (snd currentPosition - counter) == "b" then []
+				else if (snd currentPosition - counter) == "B" then []
+					else if (snd currentPosition - counter) == "w" then []
+						else if (snd currentPosition - counter) == "W" then []
+							else (remove last currentPosition - counter) ++ snd currentPosition
+
+--Counter muss 3 sein
+whiteMoveRightUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
+whiteMoveRightUp currentBoard currentPosition counter 
+			if (snd currentPosition - counter) == "b" then []
+				else if (snd currentPosition - counter) == "B" then []
+					else if (snd currentPosition - counter) == "w" then []
+						else if (snd currentPosition - counter) == "W" then []
+							else (remove last currentPosition - counter) ++ snd currentPosition	
+
+--Counter muss 4							
+blackMoveLeftUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
+blackMoveLeftUp currentBoard currentPosition counter 
+			if (snd currentPosition + counter) == "b" then []
+				else if (snd currentPosition + counter) == "B" then []
+					else if (snd currentPosition + counter) == "w" then []
+						else if (snd currentPosition + counter) == "W" then []
+							else (remove last currentPosition + counter) ++ snd currentPosition
+		
+
+--Counter muss 3 sein		
+blackMoveRightUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
+blackMoveRightUp currentBoard currentPosition counter 
+			if (snd currentPosition - counter) == "b" then []
+				else if (snd currentPosition - counter) == "B" then []
+					else if (snd currentPosition - counter) == "w" then []
+						else if (snd currentPosition - counter) == "W" then []
+							else (remove last currentPosition - counter) ++ snd currentPosition	
