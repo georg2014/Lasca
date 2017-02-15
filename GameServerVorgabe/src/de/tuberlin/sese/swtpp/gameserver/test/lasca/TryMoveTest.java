@@ -187,10 +187,15 @@ public class TryMoveTest {
 	}
 	@Test
 	public void noMovePossible05(){
-		System.out.println("**************************************************************************");
 		startGame("W,W,W,W/w,w,w/b,b,b,b/,,/w,b,,/,,/,,,",false);
 		assertMove("c3-b4",false,true);
 		assertGameState("W,W,W,W/w,w,w/b,b,b,b/b,,/w,,,/,,/,,,",false,true,false);
+	}
+	@Test
+	public void noMovePossible05esay(){
+		startGame(",,,/,,/b,b,b,b/,,/wwwwwwwwwwwwww,b,,/,,/,,,",false);
+		assertMove("c3-b4",false,true);
+		assertGameState(",,,/,,/b,b,b,b/b,,/wwwwwwwwwwwwww,,,/,,/,,,",false,true,false);
 	}
 	/**
 	 * mustCatchCatch
@@ -241,9 +246,9 @@ public class TryMoveTest {
 		}
 		@Test
 		public void testToOfficer04(){
-			startGame(",,,w/,,/,,,/,,/,,,/b,,/B,,B,B",false);
+			startGame(",,,/w,,/,,,/,,/,,,/b,,/B,,B,B",false);
 			assertMove("b2-c1",false,true);
-			assertGameState(",,,w/,,/,,,/,,/,,,/,,/B,B,B,B",true,false,false);		
+			assertGameState(",,,/w,,/,,,/,,/,,,/,,/B,B,B,B",true,false,false);		
 		}
 		@Test
 		public void testToOfficer05(){
@@ -1058,6 +1063,18 @@ public class TryMoveTest {
 		startGame("BWwb,,,/,,/,,,/,,/,,,/B,,/w,,,w",false);
 		assertMove("a2-a6",false,false);
 		assertGameState("BWwb,,,/,,/,,,/,,/,,,/B,,/w,,,w",false,false,false);
+	}
+	@Test
+	public void testValidFields1(){
+		startGame("BWwb,,,/,,/,,,/,,/,,,/,,/,,,w",false);
+		assertMove("b1-c1",false,false);
+		assertGameState("BWwb,,,/,,/,,,/,,/,,,/,,/,,,w",false,false,false);
+	}
+	@Test
+	public void testValidFields2(){
+		startGame("BWwb,,,/,,/,,,/,,/,,,/,,/,,,w",false);
+		assertMove("b2-c2",false,false);
+		assertGameState("BWwb,,,/,,/,,,/,,/,,,/,,/,,,w",false,false,false);
 	}
 //	public void testInReach(){
 //		startGame("a,,,/,,b/,,,/,,/,,,/,,/w,,,w",true);

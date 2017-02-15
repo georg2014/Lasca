@@ -399,12 +399,13 @@ public class LascaMove implements Serializable {
 			reach = 2;
 //		boolean[] possible4={false,false,false,false};
 		LascaField[] fields = {null,null,null,null};
+		String firstOfL = board[y][x].getFirst();
 		for(int i = 0; i<fields.length;i++){
 			try{
 				fields[i] = possibleMoveOf(x,y,reach,i);
-				if("w".equals(fields[i].getFirst()) && i%2==1){
+				if("w".equals(firstOfL) && i%2==1){
 					fields[i] = null;
-				}else if("b".equals(fields[i].getFirst()) && i%2==0){
+				}else if("b".equals(firstOfL) && i%2==0){
 					fields[i] = null;
 				}
 //				if(isOfficer && colour.equals("B") || colour.equals("w")){
