@@ -20,7 +20,7 @@ data Color = White | Black
 
 --- logic (TODO)
 getMove :: String -> String
-getMove   s = let move=head (listMoves s) in if move == [] then "" else take 5 move
+getMove   x:xs = take 5 xs
 listMoves s = "[g3-f4,...]" -- Eigene Definition einfügen!
 
     --- ... ---
