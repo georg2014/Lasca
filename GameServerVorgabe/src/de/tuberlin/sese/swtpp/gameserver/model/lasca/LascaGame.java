@@ -190,7 +190,6 @@ public class LascaGame extends Game implements Serializable{
 	
 	@Override
 	public void setState(String state) {
-		System.out.println("state: "+state);
 		this.state = state;
 	}
 	
@@ -232,44 +231,24 @@ public class LascaGame extends Game implements Serializable{
 				state = lb.array2fen();
 				if(lm.isFinished()){
 					finish(player);
-					System.out.println("\tisFinished: "+isFinished());
-					System.out.println("\t"+player.getName()+"(alice=white) "+player.isWinner());
 					return true;
 				}
 				if(!isPromoted && lm.mustCatchCatch()){
 					setState(state);
 					setNextPlayer(player);
-					System.out.println("\ttryMove: true1");
 					return true;
 				}
 				if(lm.getColour().equals("w")){
 					setState(state);
 					setNextPlayer(blackPlayer);
-					System.out.println("\ttryMove: true2");
 					return true;
 				}else{
 					setState(state);
 					setNextPlayer(whitePlayer);
-					System.out.println("\ttryMove: true3");
 					return true;
 				}
 			}
 		}
-//		//after jonas
-//		if(lm.mustCatch() && lm.validMove()){
-//			if(state.equals(lb.array2fen())){
-//				return false;
-//			}else{
-//				if(!lm.mustCatch()){
-//					//change player acording to colour
-//				}else{
-//					return true;
-//				}
-//			}
-//		}else{
-//			//normal move
-//		}
-		System.err.println("Move not possible!(tryMove)");
 		return false;
 	}
 }

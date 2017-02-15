@@ -1017,7 +1017,7 @@ public class TryMoveTest {
 		assertGameState(",,,/W,W,W/,,,/W,W,W/,,,/W,W,W/WWbbBBBBBBBBB,,,",true,true,true);
 	}
 	@Test
-	public void testMustCatchNormal(){//TODO needs to be debugged
+	public void testMustCatchNormal(){
 		startGame("b,,,/,,/,,,/,,/,,,/,,b/w,,,w",true);
 		assertMove("a1-b2",true,false);
 		assertGameState("b,,,/,,/,,,/,,/,,,/,,b/w,,,w",true,false,false);
@@ -1076,9 +1076,10 @@ public class TryMoveTest {
 		assertMove("b2-c2",false,false);
 		assertGameState("BWwb,,,/,,/,,,/,,/,,,/,,/,,,w",false,false,false);
 	}
-//	public void testInReach(){
-//		startGame("a,,,/,,b/,,,/,,/,,,/,,/w,,,w",true);
-//		assertMove("a1-a2",true,false);
-//		assertGameState("a,,,/,,b/,,,/,,/,,,/,,/w,,,w",true,false,false);
-//	}
+	@Test
+	public void testMustCatchNormal2(){
+		startGame("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false);
+		assertMove("e5-d4",false,false);
+		assertGameState("BWwb,,,/,,/,,b,/,,w/,,,/,,/,,,w",false,false,false);
+	}
 }

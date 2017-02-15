@@ -30,6 +30,12 @@ public class LascaMove implements Serializable {
 	public String getColour(){
 		return colour;
 	}
+	private String getOtherColour(){
+		if("w".equals(colour))
+			return "b";
+		else
+			return "w";
+	}
 	
 	public  int getXL(){
 		//editor: Georg Stahn
@@ -83,13 +89,7 @@ public class LascaMove implements Serializable {
 	
 	//getBetween = field between location and destination
 	public LascaField getB(){
-		
 		return board[(getYD()+getYL())/2][(getXD()+getXL())/2];
-		//between the location and the destination is a field (alpa|beta) where a chip of the other colour lays
-		//int bx = (getXL()+getXD())/2;//x coordinate of this field
-		//int by = (getYL()+getYD())/2;//y coordinate of this field
-		//System.err.println("bx:"+bx+" by:"+by);
-		
 	}
 
 	/*END************************************GETTER**********************************END*/
@@ -115,9 +115,6 @@ public class LascaMove implements Serializable {
 		if("w".equals(colour))
 			return 0;
 		return 6;
-//		if("b".equals(colour))
-//			return 6;
-//		return -1;
 	}
 	private void normalMove(){
 		getD().setField(getL().getField());
@@ -204,15 +201,13 @@ public class LascaMove implements Serializable {
 //		}
 		//7.schlagen!
 		if(Math.abs(inReach())==2){
-			System.out.println("(lm - validMove)catchMove will preform");
 			catchMove();
 			return true;
 		}
 		if(mustCatchNormal()){
-			System.out.println("(lm - validMove)it is possible to do a catch move");
+			System.err.println("(lm - validMove)it is possible to do a catch move");
 			return false;
 		}
-		System.out.println("(lm - validMove)normalMove will preform");
 		normalMove();
 		return true;
 	}
@@ -229,20 +224,9 @@ public class LascaMove implements Serializable {
 			return true;
 		if("b".equals(colour) && "B".equals(stone))
 			return true;
+		System.err.println("(lm - rightPlayer) maybe null");
 		return false;
 	}
-	
-//	public boolean 	mustCatch(){
-//		//editor: Georg Stahn
-//		/** mustCatch()
-//		 * @return boolean:
-//		 * 		true: if this player has to do another catchMove(not backwards) after a catchMove or instead of a normalMove this has to be done if it is possible
-//		 * 		false: else
-//		 */
-//		if(mustCatchNormal() || mustCatchCatch())
-//			return true;
-//		return false;
-//	}
 	public boolean mustCatchCatch() {
 		/** mustCatchCatch()
 		 * @return boolean
@@ -325,26 +309,18 @@ public class LascaMove implements Serializable {
 		*	>10000 catchMove is possible
 		*	the 3 last numbers give me the number of moves which are possible  
 		*/
-		//all fields with same colour on the top
-			//LascaField[] allFieldsWith(boolean white)
 		LinkedList<LascaField> allFields = allFieldsWith(colour);
 		int result=0;
 		while(allFields.size()>0){
 			LascaField field = allFields.pop();
-			if(isPoMoOf(field, false)){
-				result++;
-			}else if(isPoMoOf(field, true)){
+			if(isPoMoOf(field, true)){
 				if(result>10000)
 					result++;
 				else
 					result += 10001;
-			}
+			}else if(isPoMoOf(field, false))
+				result++;
 		}
-		//go over all of them
-			//is normal Move possible?
-				//officer
-			//is catch Move possible? -- same as mustCatchNormal
-				//officer
 		return result;
 	}
 	//is possible move of
@@ -353,10 +329,9 @@ public class LascaMove implements Serializable {
 		LascaField[] fieldsB = possibleMovesOf(getCoordinates(field)[1], getCoordinates(field)[0], field.isOfficer(), false);
 		for(int i = 0;i<fields.length; i++){
 			if(isCatch 
-					&& fields[i]!=null 
-					&& fields[i].getField()==null 
-//					&& fieldsB[i]!=null 
-					&& !rightPlayer(fieldsB[i].getFirst()))
+					&& fields[i]!=null
+					&& fields[i].getField()==null
+					&& fieldsB[i].stoneWith(getOtherColour()))
 				return true;
 			if(!isCatch && fields[i]!=null && fields[i].getField()==null)
 				return true;
@@ -374,7 +349,6 @@ public class LascaMove implements Serializable {
 				}
 			}
 		}
-		System.err.println("(lm - getCoor.) last");
 		int[] coordinates = {6,6};
 		return coordinates;
 	}
@@ -397,7 +371,6 @@ public class LascaMove implements Serializable {
 		int reach = 1; 
 		if(isCatch)
 			reach = 2;
-//		boolean[] possible4={false,false,false,false};
 		LascaField[] fields = {null,null,null,null};
 		String firstOfL = board[y][x].getFirst();
 		for(int i = 0; i<fields.length;i++){
@@ -408,16 +381,8 @@ public class LascaMove implements Serializable {
 				}else if("b".equals(firstOfL) && i%2==0){
 					fields[i] = null;
 				}
-//				if(isOfficer && colour.equals("B") || colour.equals("w")){
-//					fields[i] = possibleMoveOf(x,y,reach,i);
-//				}
-//				if(isOfficer && colour.equals("w") || colour.equals("b")){
-//					fields[i] = possibleMoveOf(x,y,reach,i);
-//				}
-//				possible4[i] = true;
 			}catch(ArrayIndexOutOfBoundsException exception){
 				fields[i] = null;
-//				System.err.println("in possibleMove "+i+" is not on board");
 			}
 		}
 		return fields;
@@ -429,10 +394,7 @@ public class LascaMove implements Serializable {
 			return board[y+reach][x-reach];
 		if(i==2)
 			return board[y-reach][x-reach];
-//		if(i==3)
 			return board[y+reach][x+reach];
-//		System.err.println("notBackwards(lm)");
-//		return null;
 	}
 	
 
@@ -444,14 +406,11 @@ public class LascaMove implements Serializable {
 		 * 		fail : -1
 		 * 		else : coordinate
 		 */
-//		if(coordinate.length()==1){
 			int c = java.lang.Character.getNumericValue(coordinate.charAt(0));
 			if(c<10)
 				return 7-c;//numbers stay numbers
 			else
 				return c-10;//little letters begin after 9
-//		}
-//		return -1;
 	}
 	public int inReach(){
 		//editor: Georg Stahn
@@ -467,19 +426,14 @@ public class LascaMove implements Serializable {
 		 * 			-2 for 2.backwards
 		 */
 		for(int i=1; i<=2; i++){
-//			System.out.println("inReach: i="+i);
 			if(Math.abs(this.getXL()-this.getXD())==i && Math.abs(this.getYL()-this.getYD())==i){
-//				System.out.println("inReach: it is a diagonal move");
 				if(colour.equals("w")){
-//					System.out.println("inReach: colour is white");
 					if((this.getYD()-this.getYL())==i){
-//						System.out.println("inReach: "+i);
 						return -i;
 					}else{
-//						System.out.println("inReach: -"+i);
 						return i;
 					}
-				}else/* if(colour.equals("b"))*/{
+				}else{
 					if((this.getYD()-this.getYL())==-i){
 						return -i;
 					}else{
