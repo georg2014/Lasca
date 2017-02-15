@@ -19,7 +19,8 @@ data Color = White | Black
     --- ... ---
 
 --- logic (TODO)
-getMove   s = "g3-f4" -- Eigene Definition einfügen!
+getMove :: String -> String
+getMove   s = let move=head (listMoves s) in if move == [] then "" else take 5 move
 listMoves s = "[g3-f4,...]" -- Eigene Definition einfügen!
 
     --- ... ---
