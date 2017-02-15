@@ -122,39 +122,67 @@ pieceToBoard x y = zip x y
 --Counter muss 4 sein
 whiteMoveLeftUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
 whiteMoveLeftUp currentBoard currentPosition counter 
-			if (snd currentPosition - counter) == "b" then []
-				else if (snd currentPosition - counter) == "B" then []
-					else if (snd currentPosition - counter) == "w" then []
-						else if (snd currentPosition - counter) == "W" then []
+			if ("b" `elem` (snd currentPosition - counter)) == false then []
+				else if ("B" `elem` (snd currentPosition - counter)) == false then []
+					else if ("w" `elem` (snd currentPosition - counter)) == false then []
+						else if ("W" `elem` (snd currentPosition - counter) == false then []
 							else (remove last currentPosition - counter) ++ snd currentPosition
 
 --Counter muss 3 sein
 whiteMoveRightUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
 whiteMoveRightUp currentBoard currentPosition counter 
-			if (snd currentPosition - counter) == "b" then []
-				else if (snd currentPosition - counter) == "B" then []
-					else if (snd currentPosition - counter) == "w" then []
-						else if (snd currentPosition - counter) == "W" then []
-							else (remove last currentPosition - counter) ++ snd currentPosition	
+			if ("b" `elem` (snd currentPosition - counter)) == false then []
+				else if ("B" `elem` (snd currentPosition - counter)) == false then []
+					else if ("w" `elem` (snd currentPosition - counter)) == false then []
+						else if ("W" `elem` (snd currentPosition - counter) == false then []
+							else (remove last currentPosition - counter) ++ snd currentPosition
 
 --Counter muss 4							
 blackMoveLeftUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
 blackMoveLeftUp currentBoard currentPosition counter 
-			if (snd currentPosition + counter) == "b" then []
-				else if (snd currentPosition + counter) == "B" then []
-					else if (snd currentPosition + counter) == "w" then []
-						else if (snd currentPosition + counter) == "W" then []
-							else (remove last currentPosition + counter) ++ snd currentPosition
+			if ("b" `elem` (snd currentPosition - counter)) == false then []
+				else if ("B" `elem` (snd currentPosition - counter)) == false then []
+					else if ("w" `elem` (snd currentPosition - counter)) == false then []
+						else if ("W" `elem` (snd currentPosition - counter) == false then []
+							else (remove last currentPosition - counter) ++ snd currentPosition
 		
 
 --Counter muss 3 sein		
 blackMoveRightUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
 blackMoveRightUp currentBoard currentPosition counter 
-			if (snd currentPosition - counter) == "b" then []
-				else if (snd currentPosition - counter) == "B" then []
-					else if (snd currentPosition - counter) == "w" then []
-						else if (snd currentPosition - counter) == "W" then []
+			if ("b" `elem` (snd currentPosition - counter)) == false then []
+				else if ("B" `elem` (snd currentPosition - counter)) == false then []
+					else if ("w" `elem` (snd currentPosition - counter)) == false then []
+						else if ("W" `elem` (snd currentPosition - counter) == false then []
 							else (remove last currentPosition - counter) ++ snd currentPosition
+
+							
+-- Schlagen funktion Counter muss 8 sein							
+-- whiteBeatLeftUp :: [([Char],[Char])] -> ([Char],[Char]) -> Int -> [([Char],[Char])]
+-- blackMoveRightUp currentBoard currentPosition counter 
+--			if ("b" `elem` (snd currentPosition - counter)) == false then []
+--				else if ("B" `elem` (snd currentPosition - counter)) == false then []
+--					else if ("w" `elem` (snd currentPosition - counter)) == false then []
+--						else if ("W" `elem` (snd currentPosition - counter) == false then []
+--							else 
+--									(remove last currentPosition - counter) ++ snd currentPosition	
+
+
+--Soldat zu Offizier
+whiteSolToOff if "a7" `elem` currentPosition == true then ((remove last currentPosition) ++ "W")
+				else if "c7" `elem` currentPosition == true then ((remove last currentPosition) ++ "W")
+					else if "e7" `elem` currentPosition == true then ((remove last currentPosition) ++ "W")
+						else if "g7" `elem` currentPosition == true then ((remove last currentPosition) ++ "W")
+							else []
+							
+blackSolToOff if "a1" `elem` currentPosition == true then ((remove last currentPosition) ++ "B")
+				else if "c1" `elem` currentPosition == true then ((remove last currentPosition) ++ "B")
+					else if "e1" `elem` currentPosition == true then ((remove last currentPosition) ++ "B")
+						else if "g1" `elem` currentPosition == true then ((remove last currentPosition) ++ "B")
+							else []
+
+
+checkPossibleMoves b = if "w" `elem` (last (splitInput x)) then	
 							
 changeStones :: [(String)] -> String -> [(String)]
 changeStones x y = [makeToTuple (head (head x)) y]
